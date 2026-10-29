@@ -1,5 +1,6 @@
 # CI du dépôt public : clone le dépôt privé Ajustor/dq9Recomp avec une deploy key en lecture seule,
-# compile le jeu et son lanceur pour Windows et Linux, et publie une version à chaque étiquette `v*`.
+# compile le jeu et son lanceur pour Windows, Linux et Android, et publie une version à chaque
+# étiquette `v*`.
 # Les journaux et les versions d'un dépôt public sont visibles de tous : rien ici n'affiche le code
 # du dépôt privé, et aucune donnée du jeu n'est incluse (chaque joueur importe sa propre ROM).
 # Les tests restent dans la CI du dépôt privé, pour ne pas exposer leurs sorties.
@@ -113,9 +114,93 @@ jobs:
             dq9recomp-${{ matrix.name }}.tar.gz
           if-no-files-found: error
 
-  # Une seule version par étiquette, une fois les deux paquets prêts.
+  # L'APK Android (téléphones 64 bits) : la bibliothèque du moteur par cargo-ndk (crate
+  # dq9-android), puis le projet Gradle android/ du dépôt privé. Signé avec le keystore des
+  # secrets ; sans eux, avec une clé de débogage jetable (installable, mais chaque version
+  # demanderait de désinstaller la précédente).
+  android:
+    needs: resolve
+    runs-on: ubuntu-latest
+    env:
+      NDK_VERSION: 28.2.13676358
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.PRIVATE_REPO }}
+          ref: ${{ needs.resolve.outputs.sha }}
+          ssh-key: ${{ secrets.PRIVATE_REPO_SSH_KEY }}
+          persist-credentials: false
+
+      # Une révision d'avant la version Android (sans android/ ni crates/dq9-android) : pas
+      # d'APK, les paquets Windows et Linux sont publiés quand même.
+      - name: Projet Android présent ?
+        id: present
+        run: |
+          if [ -d android ] && [ -d crates/dq9-android ]; then
+            echo "ok=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "::warning::Cette révision du dépôt privé n'a pas de version Android : pas d'APK."
+          fi
+
+      - uses: dtolnay/rust-toolchain@stable
+        if: steps.present.outputs.ok
+        with:
+          targets: aarch64-linux-android
+
+      - uses: Swatinem/rust-cache@v2
+        if: steps.present.outputs.ok
+        with:
+          key: android
+
+      - uses: actions/setup-java@v4
+        if: steps.present.outputs.ok
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - uses: android-actions/setup-android@v3
+        if: steps.present.outputs.ok
+
+      - name: NDK et cargo-ndk
+        if: steps.present.outputs.ok
+        run: |
+          sdkmanager --install "ndk;$NDK_VERSION" > /dev/null
+          echo "ANDROID_NDK_HOME=$ANDROID_SDK_ROOT/ndk/$NDK_VERSION" >> "$GITHUB_ENV"
+          cargo install cargo-ndk --locked
+
+      - name: Bibliothèque native (libdq9.so)
+        if: steps.present.outputs.ok
+        run: cargo ndk -t arm64-v8a -P 26 -o android/app/src/main/jniLibs build --release -p dq9-android
+
+      - name: APK
+        if: steps.present.outputs.ok
+        working-directory: android
+        env:
+          ANDROID_KEYSTORE_B64: ${{ secrets.ANDROID_KEYSTORE_B64 }}
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          VERSION: ${{ github.ref_name }}
+        run: |
+          if [ -z "$ANDROID_KEYSTORE_B64" ]; then
+            echo "::warning::Pas de keystore dans les secrets : APK signé avec une clé de débogage."
+          fi
+          # v0.1.0 → 0.1.0 ; une branche (lancement manuel) garde la version par défaut.
+          name=$([[ "$VERSION" =~ ^v[0-9] ]] && echo "${VERSION#v}" || echo "0.1.0")
+          ./gradlew assembleRelease --no-daemon -Pdq9.skipCargo=true -Pdq9.abis=arm64-v8a \
+            -Pdq9.versionName="$name" -Pdq9.versionCode=${{ github.run_number }}
+          cp app/build/outputs/apk/release/app-release.apk ../dq9recomp-android-arm64.apk
+
+      - uses: actions/upload-artifact@v4
+        if: steps.present.outputs.ok
+        with:
+          name: dq9recomp-android-arm64
+          path: dq9recomp-android-arm64.apk
+          if-no-files-found: error
+
+  # Une seule version par étiquette, une fois les trois paquets prêts.
   release:
-    needs: [resolve, build]
+    needs: [resolve, build, android]
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     permissions:
@@ -132,6 +217,6 @@ jobs:
           fail_on_unmatched_files: true
           generate_release_notes: false
           body: |
-            Paquets Windows et Linux de dq9Recomp.
-            Lancez dq9-runtime, importez votre ROM européenne de Dragon Quest IX (YDQP) depuis le lanceur, puis jouez.
+            Paquets Windows et Linux de dq9Recomp, et l'APK Android (téléphones 64 bits, Android 8 ou plus).
+            Lancez dq9-runtime (ou l'application Dragon Quest IX sur Android), importez votre ROM européenne de Dragon Quest IX (YDQP) depuis le lanceur, puis jouez.
             Aucune donnée du jeu n'est incluse.
