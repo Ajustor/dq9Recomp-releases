@@ -1,0 +1,137 @@
+# CI du dépôt public : clone le dépôt privé Ajustor/dq9Recomp avec une deploy key en lecture seule,
+# compile le jeu et son lanceur pour Windows et Linux, et publie une version à chaque étiquette `v*`.
+# Les journaux et les versions d'un dépôt public sont visibles de tous : rien ici n'affiche le code
+# du dépôt privé, et aucune donnée du jeu n'est incluse (chaque joueur importe sa propre ROM).
+# Les tests restent dans la CI du dépôt privé, pour ne pas exposer leurs sorties.
+
+name: release
+
+on:
+  push:
+    tags: ["v*"]
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: "Branche, étiquette ou commit du dépôt privé à compiler"
+        default: master
+        required: true
+
+permissions:
+  contents: read
+
+env:
+  CARGO_TERM_COLOR: always
+  PRIVATE_REPO: Ajustor/dq9Recomp
+
+jobs:
+  # Fixe le commit du dépôt privé une seule fois, pour que les deux systèmes compilent le même :
+  # l'étiquette du même nom si elle existe dans le dépôt privé, sinon master (ou l'entrée manuelle).
+  resolve:
+    runs-on: ubuntu-latest
+    outputs:
+      sha: ${{ steps.ref.outputs.sha }}
+    steps:
+      - name: Révision du dépôt privé
+        id: ref
+        env:
+          SSH_KEY: ${{ secrets.PRIVATE_REPO_SSH_KEY }}
+          WANTED: ${{ github.event_name == 'workflow_dispatch' && inputs.ref || github.ref_name }}
+        run: |
+          eval "$(ssh-agent -s)" > /dev/null
+          echo "$SSH_KEY" | ssh-add - 2> /dev/null
+          mkdir -p ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts 2> /dev/null
+          url="git@github.com:$PRIVATE_REPO.git"
+          refs=$(git ls-remote "$url" "refs/tags/$WANTED" "refs/tags/$WANTED^{}" "refs/heads/$WANTED")
+          # Une étiquette annotée donne son objet puis, avec ^{}, le commit qu'elle désigne
+          sha=$( (grep -F "refs/tags/$WANTED^{}" <<< "$refs"; grep -F -e "refs/tags/$WANTED" -e "refs/heads/$WANTED" <<< "$refs") | head -n1 | cut -f1)
+          if [ -z "$sha" ] && [[ "$WANTED" =~ ^[0-9a-f]{40}$ ]]; then
+            sha=$WANTED
+          fi
+          if [ -z "$sha" ]; then
+            echo "« $WANTED » est introuvable dans le dépôt privé, compilation de master"
+            sha=$(git ls-remote "$url" refs/heads/master | cut -f1)
+          fi
+          echo "sha=$sha" >> "$GITHUB_OUTPUT"
+          echo "Commit du dépôt privé : $sha"
+
+  build:
+    needs: resolve
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - os: windows-latest
+            name: windows-x64
+            exe: .exe
+          - os: ubuntu-latest
+            name: linux-x64
+            exe: ""
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          repository: ${{ env.PRIVATE_REPO }}
+          ref: ${{ needs.resolve.outputs.sha }}
+          ssh-key: ${{ secrets.PRIVATE_REPO_SSH_KEY }}
+          persist-credentials: false
+
+      - uses: dtolnay/rust-toolchain@stable
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Bibliothèques système (son, manettes, fenêtres)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libasound2-dev libudev-dev libgtk-3-dev libxkbcommon-dev libwayland-dev
+
+      - name: Compilation
+        run: cargo build --release -p dq9-runtime -p dq9-extract
+
+      - name: Paquet
+        shell: bash
+        run: |
+          out=dq9recomp-${{ matrix.name }}
+          mkdir -p "$out/config"
+          for bin in dq9-runtime dq9-extract; do
+            cp "target/release/$bin${{ matrix.exe }}" "$out/"
+          done
+          cp config/rom.json config/progress.json "$out/config/"
+          cp README.md "$out/"
+          echo "Lancez dq9-runtime : importez votre ROM européenne de Dragon Quest IX depuis le lanceur, puis jouez." > "$out/LISEZMOI.txt"
+          if [ "$RUNNER_OS" = "Windows" ]; then
+            7z a "$out.zip" "$out" > /dev/null
+          else
+            tar czf "$out.tar.gz" "$out"
+          fi
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dq9recomp-${{ matrix.name }}
+          path: |
+            dq9recomp-${{ matrix.name }}.zip
+            dq9recomp-${{ matrix.name }}.tar.gz
+          if-no-files-found: error
+
+  # Une seule version par étiquette, une fois les deux paquets prêts.
+  release:
+    needs: [resolve, build]
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: dist
+          merge-multiple: true
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: dist/*
+          fail_on_unmatched_files: true
+          generate_release_notes: false
+          body: |
+            Paquets Windows et Linux de dq9Recomp.
+            Lancez dq9-runtime, importez votre ROM européenne de Dragon Quest IX (YDQP) depuis le lanceur, puis jouez.
+            Aucune donnée du jeu n'est incluse.
