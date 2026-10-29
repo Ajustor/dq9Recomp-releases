@@ -158,14 +158,15 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      - uses: android-actions/setup-android@v3
-        if: steps.present.outputs.ok
-
+      # Le SDK est déjà sur ubuntu-latest (ANDROID_HOME) : son sdkmanager le plus récent ajoute
+      # le NDK, la plateforme et les outils de construction.
       - name: NDK et cargo-ndk
         if: steps.present.outputs.ok
         run: |
-          sdkmanager --install "ndk;$NDK_VERSION" > /dev/null
-          echo "ANDROID_NDK_HOME=$ANDROID_SDK_ROOT/ndk/$NDK_VERSION" >> "$GITHUB_ENV"
+          sdkmanager=$(ls -d "$ANDROID_HOME"/cmdline-tools/*/bin/sdkmanager | sort -V | tail -n1)
+          yes | "$sdkmanager" --licenses > /dev/null || true
+          "$sdkmanager" --install "ndk;$NDK_VERSION" "platforms;android-35" "build-tools;35.0.0" > /dev/null
+          echo "ANDROID_NDK_HOME=$ANDROID_HOME/ndk/$NDK_VERSION" >> "$GITHUB_ENV"
           cargo install cargo-ndk --locked
 
       - name: Bibliothèque native (libdq9.so)
