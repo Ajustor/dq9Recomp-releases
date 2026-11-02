@@ -124,12 +124,15 @@ jobs:
     env:
       NDK_VERSION: 28.2.13676358
     steps:
+      # Tout l'historique : le versionCode de l'APK est le nombre de commits du dépôt privé
+      # (android/app/build.gradle.kts), le même que dans sa propre CI.
       - uses: actions/checkout@v4
         with:
           repository: ${{ env.PRIVATE_REPO }}
           ref: ${{ needs.resolve.outputs.sha }}
           ssh-key: ${{ secrets.PRIVATE_REPO_SSH_KEY }}
           persist-credentials: false
+          fetch-depth: 0
 
       # Une révision d'avant la version Android (sans android/ ni crates/dq9-android) : pas
       # d'APK, les paquets Windows et Linux sont publiés quand même.
@@ -186,10 +189,11 @@ jobs:
           if [ -z "$ANDROID_KEYSTORE_B64" ]; then
             echo "::warning::Pas de keystore dans les secrets : APK signé avec une clé de débogage."
           fi
-          # v0.1.0 → 0.1.0 ; une branche (lancement manuel) garde la version par défaut.
-          name=$([[ "$VERSION" =~ ^v[0-9] ]] && echo "${VERSION#v}" || echo "0.1.0")
-          ./gradlew assembleRelease --no-daemon -Pdq9.skipCargo=true -Pdq9.abis=arm64-v8a \
-            -Pdq9.versionName="$name" -Pdq9.versionCode=${{ github.run_number }}
+          # versionCode : le nombre de commits du dépôt privé, calculé par Gradle. versionName :
+          # v0.1.0 → 0.1.0 ; une branche (lancement manuel) garde celui de Gradle (0.1.<n>-<sha>).
+          name=()
+          if [[ "$VERSION" =~ ^v[0-9] ]]; then name=(-Pdq9.versionName="${VERSION#v}"); fi
+          ./gradlew assembleRelease --no-daemon -Pdq9.skipCargo=true -Pdq9.abis=arm64-v8a "${name[@]}"
           cp app/build/outputs/apk/release/app-release.apk ../dq9recomp-android-arm64.apk
 
       - uses: actions/upload-artifact@v4
