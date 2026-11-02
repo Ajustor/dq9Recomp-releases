@@ -161,8 +161,8 @@ jobs:
 
   # L'APK Android (téléphones 64 bits) : la bibliothèque du moteur par cargo-ndk (crate
   # dq9-android), puis le projet Gradle android/ du dépôt privé. Signé avec le keystore des
-  # secrets ; sans eux, avec une clé de débogage jetable (installable, mais chaque version
-  # demanderait de désinstaller la précédente).
+  # secrets : sans eux, aucune version n'est publiée (une compilation manuelle prend la clé de
+  # débogage du dépôt, que Play Protect juge dangereuse).
   android:
     needs: resolve
     runs-on: ubuntu-latest
@@ -230,14 +230,34 @@ jobs:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
+          PUBLISHING: ${{ needs.resolve.outputs.tag }}
         run: |
-          if [ -z "$ANDROID_KEYSTORE_B64" ]; then
-            echo "::warning::Pas de keystore dans les secrets : APK signé avec une clé de débogage."
+          # Une version publiée doit être signée de la clé de release : avec la clé de débogage du
+          # dépôt, Play Protect bloque l'installation, et passer ensuite à la vraie clé oblige à
+          # désinstaller le jeu. Une compilation manuelle (sans version) reste permise.
+          missing=""
+          for name in ANDROID_KEYSTORE_B64 ANDROID_KEYSTORE_PASSWORD ANDROID_KEY_ALIAS ANDROID_KEY_PASSWORD; do
+            [ -n "${!name}" ] || missing="$missing $name"
+          done
+          if [ -n "$missing" ]; then
+            if [ -n "$PUBLISHING" ]; then
+              echo "::error::Secrets manquants pour signer l'APK de la version $PUBLISHING :$missing (voir README, étape 6). Rien n'est publié."
+              exit 1
+            fi
+            echo "::warning::Secrets manquants :$missing. APK signé avec la clé de débogage (compilation manuelle, non publiée)."
           fi
           # versionCode : le nombre de commits du dépôt privé (le même que dans sa propre CI).
           ./gradlew assembleRelease --no-daemon -Pdq9.skipCargo=true -Pdq9.abis=arm64-v8a \
             -Pdq9.versionCode=${{ needs.resolve.outputs.build }} -Pdq9.versionName=${{ needs.resolve.outputs.version }}
           cp app/build/outputs/apk/release/app-release.apk ../dq9recomp-android-arm64.apk
+          # Garde-fou : une version publiée n'est jamais signée de la clé de débogage du dépôt.
+          apksigner=$(ls -d "$ANDROID_HOME"/build-tools/*/apksigner | sort -V | tail -n1)
+          signer=$("$apksigner" verify --print-certs ../dq9recomp-android-arm64.apk | grep -m1 "certificate DN")
+          echo "$signer"
+          if [ -n "$PUBLISHING" ] && grep -q "dq9Recomp Debug" <<< "$signer"; then
+            echo "::error::L'APK est signé de la clé de débogage : rien n'est publié."
+            exit 1
+          fi
 
       - uses: actions/upload-artifact@v4
         if: steps.present.outputs.ok
