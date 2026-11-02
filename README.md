@@ -25,10 +25,19 @@ Rangé ici, sous `ci-public/`, le workflow n'est jamais exécuté par GitHub dan
    keytool -genkeypair -v -keystore dq9.keystore -alias dq9 -keyalg RSA -keysize 4096 -validity 36500
    base64 -w0 dq9.keystore > dq9.keystore.b64
    ```
+   Sous Windows (PowerShell ; `keytool` vient du JDK, par exemple
+   `C:\Program Files\Android\Android Studio\jbr\bin\keytool.exe`) :
+   ```powershell
+   keytool -genkeypair -v -keystore dq9.keystore -alias dq9 -keyalg RSA -keysize 4096 -validity 36500
+   [Convert]::ToBase64String([IO.File]::ReadAllBytes("$PWD\dq9.keystore")) | Set-Content -NoNewline dq9.keystore.b64
+   ```
    puis, dans les secrets du dépôt **public** : `ANDROID_KEYSTORE_B64` (le contenu de
    `dq9.keystore.b64`), `ANDROID_KEYSTORE_PASSWORD`, `ANDROID_KEY_ALIAS` (`dq9`) et
    `ANDROID_KEY_PASSWORD`. Garder `dq9.keystore` en lieu sûr, hors des dépôts. Sans ces secrets,
-   l'APK est signé avec une clé de débogage jetable (un avertissement le signale dans le run).
+   **aucune version n'est publiée** (le job Android échoue) : un APK signé avec la clé de débogage
+   du dépôt est bloqué comme dangereux par Play Protect, et passer ensuite à la vraie clé oblige
+   à désinstaller le jeu (donc à perdre ses journaux). Une compilation manuelle (*Run workflow*,
+   sans version) reste possible avec la clé de débogage, en artefact seulement.
 
 ## Publier une version
 
