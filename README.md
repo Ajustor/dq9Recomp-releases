@@ -32,6 +32,20 @@ Rangé ici, sous `ci-public/`, le workflow n'est jamais exécuté par GitHub dan
 
 ## Publier une version
 
+### À chaque merge sur master (automatique)
+
+La CI du dépôt privé (job `publish` de `.github/workflows/build.yml`) demande au dépôt public de
+compiler le commit fusionné et de publier la version `<x.y>.<build>` (`x.y` : la version du `Cargo.toml` du workspace, `0.4`
+aujourd'hui), où `<build>` est le nombre de
+commits (le `versionCode` de l'APK). Le lanceur des joueurs la propose alors en mise à jour.
+
+Mise en place, une fois : créer un jeton à grain fin (*GitHub → Settings → Developer settings →
+Fine-grained tokens*) limité au dépôt public, avec le droit **Contents : Read and write**, et
+l'ajouter dans les secrets du dépôt **privé** sous le nom `RELEASES_TOKEN`. Sans lui, le job
+`publish` ne fait rien.
+
+### Par étiquette
+
 Dans le dépôt public :
 
 ```sh
@@ -42,6 +56,21 @@ Le commit compilé dans le dépôt privé est l'étiquette du même nom si elle 
 `master`. Étiqueter les deux dépôts du même nom rend donc chaque version reproductible.
 *Actions → release → Run workflow* compile une branche, une étiquette ou un commit au choix, sans
 publier de version (les paquets restent en artefacts du run).
+
+## Mises à jour du jeu
+
+Chaque version porte, à côté de ses paquets, un `version.json` (`{"version", "build", "commit"}`).
+Le lanceur (`crates/dq9-launcher/src/update.rs`) lit la dernière version publiée et la propose
+quand son `build` dépasse le sien :
+
+- sur PC, il télécharge le paquet de son système et le déballe par-dessus le dossier du jeu, puis
+  redémarre (une version compilée depuis les sources se met à jour avec git) ;
+- sur Android, il télécharge l'APK et ouvre l'installateur du système. La mise à jour ne passe que
+  si l'APK installé est signé de la **même clé** (`ANDROID_KEYSTORE_B64`) : un APK de la CI
+  privée (clé de débogage) doit être désinstallé une fois avant de passer aux versions publiques.
+
+La recherche se fait au démarrage (désactivable dans les réglages) ou à la demande
+(*Réglages → Rechercher une mise à jour*).
 
 ## Ce qui est public
 
