@@ -65,9 +65,7 @@ quand son `build` dépasse le sien :
 
 - sur PC, il télécharge le paquet de son système et le déballe par-dessus le dossier du jeu, puis
   redémarre (une version compilée depuis les sources se met à jour avec git) ;
-- sur Android, il ouvre le lien de l'APK dans le navigateur, qui le télécharge ; le joueur
-  l'installe depuis la notification (le jeu ne demande pas la permission d'installer des
-  applications, que Play Protect juge dangereuse). La mise à jour ne passe que
+- sur Android, il télécharge l'APK et ouvre l'installateur du système. La mise à jour ne passe que
   si l'APK installé est signé de la **même clé** (`ANDROID_KEYSTORE_B64`) : un APK de la CI
   privée (clé de débogage) doit être désinstallé une fois avant de passer aux versions publiques.
 
