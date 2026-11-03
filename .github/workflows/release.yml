@@ -300,6 +300,6 @@ jobs:
           generate_release_notes: false
           body: |
             Paquets Windows et Linux de dq9Recomp, et l'APK Android (téléphones 64 bits, Android 8 ou plus).
-            Lancez dq9-runtime (ou l'application Dragon Quest IX sur Android), importez votre ROM européenne de Dragon Quest IX (YDQP) depuis le lanceur, puis jouez.
+            Lancez dq9-runtime (ou l'application DQ9Recomp sur Android), importez votre ROM européenne de Dragon Quest IX (YDQP) depuis le lanceur, puis jouez.
             Déjà installé ? Le lanceur propose cette version tout seul (Réglages → Mises à jour).
             Aucune donnée du jeu n'est incluse.
