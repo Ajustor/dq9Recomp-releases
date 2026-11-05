@@ -1,0 +1,74 @@
+<script lang="ts">
+  import Section from '../../components/Section.spd'
+  import Window from '../../components/Window.spd'
+</script>
+
+<Section id="install" title={t.install.title}>
+  <ol class="steps">
+    <li>
+      <Window title={t.install.step1Title}>
+        <p>{t.install.step1}</p>
+      </Window>
+    </li>
+    <li>
+      <Window title={t.install.step2Title}>
+        <p>{t.install.step2Before} <code>dq9-runtime</code> {t.install.step2After}</p>
+        <dl class="rom">
+          <dt>{t.install.version}</dt><dd>{t.install.versionValue}</dd>
+          <dt>{t.install.code}</dt><dd><code>YDQP</code></dd>
+          <dt>{t.install.file}</dt><dd>{t.install.fileValue}</dd>
+        </dl>
+      </Window>
+    </li>
+    <li>
+      <Window title={t.install.step3Title}>
+        <p>{t.install.step3}</p>
+      </Window>
+    </li>
+  </ol>
+
+  <div class="asides">
+    <Window title={t.install.android}>
+      <p>{t.install.androidText}</p>
+    </Window>
+    <Window title={t.install.updatesTitle}>
+      <p>{t.install.updatesBefore}<em>{t.install.updatesPath}</em>{t.install.updatesAfter}</p>
+    </Window>
+  </div>
+</Section>
+
+<style>
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .steps p, .asides p { margin: 0; line-height: 1.65; color: var(--text-soft) }
+
+  /* La ROM attendue, comme dans le lanceur : libellé pâle, valeur claire. */
+  .rom {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.3rem 1rem;
+    margin: 1rem 0 0;
+    font-size: 0.95rem;
+  }
+
+  .rom dt { color: var(--weak) }
+  .rom dd { margin: 0 }
+
+  .asides {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  @media (max-width: 60rem) {
+    .steps, .asides { grid-template-columns: 1fr }
+  }
+</style>

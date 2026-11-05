@@ -1,0 +1,172 @@
+<script lang="ts">
+  import Section from '../../components/Section.spd'
+  import Window from '../../components/Window.spd'
+  import { PROGRESS, allItems, percent, share } from '../../data.ts'
+  import type { Item, State } from '../../data.ts'
+
+  // Le décompte du lanceur : fait 1, partiel ½, v2 hors compte.
+  const OVERALL = share(allItems())
+  const count = (items: readonly Item[], state: State) => items.filter((item) => item.state === state).length
+  const counted = (items: readonly Item[]) => items.filter((item) => item.state !== 'later').length
+  const width = (items: readonly Item[], state: State) =>
+    counted(items) === 0 ? '0%' : `${(count(items, state) / counted(items)) * 100}%`
+</script>
+
+<Section id="progress" title={t.progress.title}>
+  <Window title={t.progress.status}>
+    <div class="overall">
+      <span class="percent">{percent(OVERALL)}<small>%</small></span>
+      <div class="overall-text">
+        <p>{t.progress.overall}</p>
+        <p class="legend">{t.progress.legend({ date: new Date(PROGRESS.updated) })}</p>
+      </div>
+    </div>
+    <span class="gauge gauge-overall" role="img" aria-label={t.progress.gauge({ percent: percent(OVERALL) })}>
+      <span class="gauge-done" style:width={`${OVERALL * 100}%`}></span>
+    </span>
+
+    <ul class="domains">
+      {#each PROGRESS.domains as domain (domain.name)}
+        <li>
+          <details class="domain">
+            <summary class="menu-item">
+              <span class="domain-head">
+                <span class="domain-percent">{t.progress.percent({ percent: percent(share(domain.items)) })}</span>
+                <span class="domain-name">{domain.name}</span>
+                <span class="domain-counts">{t.progress.counts({ done: count(domain.items, 'done'), total: counted(domain.items) })}</span>
+              </span>
+              <span class="gauge" aria-hidden="true">
+                <span class="gauge-done" style:width={width(domain.items, 'done')}></span>
+                <span class="gauge-partial" style:width={width(domain.items, 'partial')}></span>
+              </span>
+            </summary>
+            <ul class="items">
+              {#each domain.items as item (item.name)}
+                <li class="item">
+                  <span class="state state-{item.state}">{t.progress[item.state]}</span>
+                  <span class="item-text">
+                    <span class="item-name">{item.name}</span>
+                    {#if item.note !== undefined}<span class="item-note">{item.note}</span>{/if}
+                  </span>
+                </li>
+              {/each}
+            </ul>
+          </details>
+        </li>
+      {/each}
+    </ul>
+  </Window>
+  <p class="note">
+    {t.progress.note}
+    {#if t.progress.detailLanguage !== ''}<br />{t.progress.detailLanguage}{/if}
+  </p>
+</Section>
+
+<style>
+  /* --- Le total : grand pourcentage doré, puis la jauge globale --------- */
+
+  .overall {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .overall-text p { margin: 0 0 0.3rem; line-height: 1.55 }
+
+  .percent {
+    font-family: var(--font-title);
+    font-weight: 700;
+    font-size: 4.2rem;
+    line-height: 1;
+    color: var(--gold-light);
+    text-shadow: 0 0 30px rgba(232, 182, 76, 0.35);
+  }
+
+  .percent small { font-size: 0.45em; margin-left: 0.15rem }
+  .legend { font-size: 0.88rem; color: var(--weak) }
+
+  /* Une jauge de PV : un rail sombre bordé, rempli. */
+  .gauge {
+    display: flex;
+    height: 0.6rem;
+    overflow: hidden;
+    background: #070b18;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+  }
+
+  .gauge-overall { height: 0.75rem; margin: 1rem 0 1.25rem }
+  .gauge-overall .gauge-done { background: linear-gradient(90deg, var(--gold), var(--gold-light)) }
+  .gauge-done { background: linear-gradient(90deg, #4fae70, var(--ok)) }
+  .gauge-partial { background: repeating-linear-gradient(135deg, var(--warn) 0 4px, #a8721f 4px 8px) }
+
+  /* --- Les domaines : un en-tête repliable par domaine, comme le lanceur - */
+
+  .domains {
+    display: grid;
+    gap: 0.15rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .domains > li + li { border-top: 1px solid rgba(48, 62, 100, 0.6) }
+
+  .domain summary {
+    display: grid;
+    gap: 0.35rem;
+    width: 100%;
+    padding: 0.6rem 0.8rem 0.6rem 1.9rem;
+    list-style: none;
+  }
+
+  .domain summary::-webkit-details-marker { display: none }
+  .domain summary::before { top: 0.6rem; left: 0.55rem }
+  .domain summary:hover, .domain summary:focus-visible { background: rgba(255, 255, 255, 0.05) }
+  .domain[open] summary::before { content: '▼'; opacity: 1; animation: none }
+
+  .domain-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 1rem;
+  }
+
+  .domain-percent { min-width: 3.2rem; color: var(--gold-light) }
+  .domain-name { flex: 1; color: #fff }
+  .domain-counts { font-size: 0.85rem; color: var(--weak) }
+
+  /* --- Les éléments : l'état en couleur, le nom, la note ---------------- */
+
+  .items {
+    display: grid;
+    gap: 0.45rem;
+    margin: 0.3rem 0 0.9rem;
+    padding: 0.8rem 1rem 0.8rem 1.9rem;
+    list-style: none;
+    background: rgba(5, 8, 20, 0.45);
+    border-radius: 8px;
+  }
+
+  .item {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 0.75rem;
+    line-height: 1.5;
+  }
+
+  .state { font-family: var(--font-menu); font-size: 0.92rem }
+  .state-done { color: var(--ok) }
+  .state-partial { color: var(--warn) }
+  .state-missing { color: var(--error) }
+  .state-later { color: var(--sky) }
+
+  .item-text { display: flex; flex-wrap: wrap; gap: 0.1rem 0.6rem }
+  .item-name { color: var(--text) }
+  .item-note { color: var(--weak); font-size: 0.92rem }
+
+  @media (max-width: 40rem) {
+    .overall { flex-direction: column; align-items: flex-start; gap: 0.75rem }
+    .item { grid-template-columns: 1fr; gap: 0 }
+  }
+</style>

@@ -92,3 +92,32 @@ La recherche se fait au démarrage (désactivable dans les réglages) ou à la d
   Aucune donnée de la ROM n'y est incluse.
 - Les **PR de forks** n'ont pas accès au secret, et ce workflow ne se lance de toute façon que sur
   une étiquette ou à la main.
+
+## Site vitrine
+
+`site/` est la page de téléchargement, écrite avec [speedster-js](https://github.com/Ajustor/speedster-js)
+et publiée sur GitHub Pages par `.github/workflows/pages.yml` à chaque envoi sur master qui touche
+`site/` (*Settings → Pages → Source : GitHub Actions*). La page est rendue au build en HTML
+statique : les liens `releases/latest/download/…` marchent sans JavaScript, et le navigateur
+complète le système détecté, le numéro de la dernière version et la taille des paquets (API de
+GitHub). Une nouvelle version n'a donc pas besoin de republier le site ; seul l'avancement se met à jour à la main :
+recopier `config/progress.json` du dépôt privé dans `site/src/progress.json`.
+
+Le site est en français (`/`) et en anglais (`/en/`) : une page rendue au build par langue, avec
+ses liens `hreflang`. Les textes sont dans `site/src/lang/fr.json` (la référence) et `en.json` ;
+une clé absente d'une langue arrête le build. Ajouter une langue : un `<code>.json` de plus et une
+entrée dans `LOCALES` (`site/src/data.ts`). Le détail de l'avancement reste en français, comme
+dans le lanceur.
+
+Organisation de `site/src/` : `App.spd` assemble la page ; `sections/home/` contient ses sections
+(Hero, Download, Install, Progress, Faq), chacune avec son style ; `components/` contient ce qui
+est partagé (Window, Section) et le cadre de page (Header, Footer, Sky). Le curseur ▶ des menus
+(`.menu-item`), les notes et les couleurs du thème sont dans `site/public/styles.css`.
+
+```sh
+cd site && bun install
+bun run dev       # http://localhost:3000, reconstruit et recharge à chaque sauvegarde
+bun run check     # types et accessibilité
+bun run build     # dist/
+bun run preview   # sert dist/ comme Pages
+```

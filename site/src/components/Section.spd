@@ -1,0 +1,47 @@
+<script lang="ts">
+  import type { Snippet } from '@ajustor/speedster'
+
+  /** L'ancre de la section (`#download`) ; le titre reçoit `title-<id>`. */
+  export let id: string
+  export let title: string
+  export let children: Snippet
+</script>
+
+<section {id} class="section" aria-labelledby="title-{id}">
+  <h2 id="title-{id}">{title}</h2>
+  {@render children()}
+</section>
+
+<style>
+  .section {
+    max-width: 72rem;
+    margin: 0 auto;
+    padding: 3.5rem 0;
+    scroll-margin-top: 4.5rem;
+  }
+
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin: 0 0 1.75rem;
+    font-family: var(--font-title);
+    font-weight: 700;
+    font-size: clamp(1.8rem, 4vw, 2.5rem);
+    color: #fff;
+  }
+
+  /* Un filet doré qui file vers la droite. */
+  h2::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--gold), transparent);
+    opacity: 0.6;
+  }
+
+  /* Sur téléphone, l'en-tête passe sur deux lignes : l'ancre doit tomber dessous. */
+  @media (max-width: 40rem) {
+    .section { scroll-margin-top: 9rem }
+  }
+</style>

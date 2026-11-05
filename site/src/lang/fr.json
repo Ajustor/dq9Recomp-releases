@@ -1,0 +1,94 @@
+{
+  "meta": {
+    "title": "DQ9Recomp — Dragon Quest IX sur PC et Android",
+    "description": "Portage natif non officiel de Dragon Quest IX pour Windows, Linux et Android. Téléchargez le lanceur, importez votre ROM, jouez.",
+    "share": "Dragon Quest IX, réécrit en Rust pour Windows, Linux et Android."
+  },
+  "nav": {
+    "sections": "Sections",
+    "language": "Langue",
+    "download": "Télécharger",
+    "install": "Installer",
+    "progress": "Avancement",
+    "faq": "Questions"
+  },
+  "home": {
+    "kicker": "Portage natif · Windows · Linux · Android",
+    "game": "Dragon Quest IX : Les Sentinelles du Firmament",
+    "tagline": ", réécrit en Rust pour tourner nativement sur PC et sur téléphone. Grand écran, manette, clavier ou tactile — et vos journaux qui vous suivent.",
+    "download": "Télécharger",
+    "downloadFor": "Télécharger pour {platform}",
+    "allReleases": "Toutes les versions",
+    "version": "Version",
+    "released": "· publiée le {date, date, long}",
+    "latest": "Dernière version publiée sur GitHub"
+  },
+  "dialogue": {
+    "line1": "Bienvenue, Sentinelle !",
+    "line2": "Ce portage ne contient aucune donnée du jeu.",
+    "line3": "Apportez la ROM de votre cartouche : le lanceur s’occupe du reste."
+  },
+  "download": {
+    "title": "Télécharger",
+    "which": "Quel système ?",
+    "yours": "Votre système",
+    "size": "{n, number} Mio",
+    "windows": "Windows 10 et 11, 64 bits. Décompressez, puis lancez dq9-runtime.exe.",
+    "linux": "x86-64. Décompressez, puis lancez ./dq9-runtime.",
+    "android": "Téléphones 64 bits, Android 8 ou plus. Manette tactile intégrée.",
+    "note": "Aucune donnée du jeu n’est incluse : chaque paquet ne contient que le moteur et son lanceur. Les versions précédentes et leurs notes sont sur",
+    "noteLink": "GitHub"
+  },
+  "install": {
+    "title": "Installer",
+    "step1Title": "1 · Télécharger",
+    "step1": "Prenez le paquet de votre système ci-dessus. Sur PC, décompressez-le où vous voulez : tout reste dans ce dossier.",
+    "step2Title": "2 · Importer la ROM",
+    "step2Before": "Lancez",
+    "step2After": "(ou l’application DQ9Recomp) et choisissez la ROM européenne, copiée depuis votre propre cartouche.",
+    "version": "Version",
+    "versionValue": "Europe (En, Fr, De, Es, It)",
+    "code": "Code",
+    "file": "Fichier",
+    "fileValue": ".nds, environ 256 Mio",
+    "step3Title": "3 · Jouer",
+    "step3": "Graphismes, textes, musiques et cinématiques sont extraits une fois pour toutes sur votre appareil. Ensuite, c’est l’écran titre.",
+    "android": "Android",
+    "androidText": "L’APK ne vient pas du Play Store : autorisez votre navigateur à installer des applications, puis ouvrez le fichier téléchargé. Play Protect peut demander une confirmation : l’APK est signé, toujours de la même clé.",
+    "updatesTitle": "Mises à jour",
+    "updatesBefore": "Le lanceur cherche les nouvelles versions au démarrage et les installe pour vous (",
+    "updatesPath": "Réglages → Rechercher une mise à jour",
+    "updatesAfter": "). Vos journaux sont conservés."
+  },
+  "progress": {
+    "title": "Avancement",
+    "status": "Statut",
+    "overall": "Avancement global du portage : ce qui est réellement en place dans le moteur.",
+    "legend": "Un élément fait compte pour 1, partiel pour ½ ; ceux prévus pour la v2 (multijoueur) ne comptent pas. Mis à jour le {date, date, long}.",
+    "gauge": "{percent} % du portage en place",
+    "percent": "{percent} %",
+    "counts": "{done} faits sur {total}",
+    "done": "fait",
+    "partial": "partiel",
+    "missing": "manquant",
+    "later": "v2",
+    "note": "Choisissez un domaine pour voir le détail, comme dans l’onglet Avancement du lanceur.",
+    "detailLanguage": ""
+  },
+  "faq": {
+    "title": "Questions",
+    "q1": "Est-ce un émulateur ?",
+    "a1": "Non. C’est un moteur natif, écrit en Rust d’après la lecture du code ARM du jeu : ni émulation, ni recompilation statique. D’où la haute résolution et la fluidité.",
+    "q2": "Pourquoi faut-il ma propre ROM ?",
+    "a2": "Le projet ne distribue aucune donnée du jeu. Le lanceur vérifie la ROM (code YDQP), puis en extrait les ressources localement. Une autre version est refusée avec une explication.",
+    "q3": "Puis-je reprendre ma sauvegarde DS ?",
+    "a3": "Oui : dans la page Journaux du lanceur, « Importer une sauvegarde DS » accepte les fichiers .sav et .dsv.",
+    "q4": "Avec quoi joue-t-on ?",
+    "a4": "Clavier, manette, souris ou doigt. Les touches se reconfigurent dans le lanceur ; sur Android, une manette tactile s’affiche en jeu."
+  },
+  "footer": {
+    "before": "Projet de fans non officiel, sans lien avec Square Enix, Level-5 ou Nintendo.",
+    "brand": "Dragon Quest",
+    "after": "est une marque de Square Enix. Aucune donnée du jeu n’est distribuée."
+  }
+}

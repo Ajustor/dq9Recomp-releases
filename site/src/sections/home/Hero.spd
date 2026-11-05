@@ -1,0 +1,189 @@
+<script lang="ts">
+  import Window from '../../components/Window.spd'
+  import { PACKAGES, RELEASES_PAGE, directLink } from '../../data.ts'
+  import type { Platform, Release } from '../../data.ts'
+
+  /** Le système du visiteur ; `null` au rendu du build, ou s'il n'est pas reconnu. */
+  export let platform: Platform | null
+  /** La dernière version publiée ; `null` tant que l'API n'a pas répondu. */
+  export let release: Release | null
+
+  const recommended = PACKAGES.find((entry) => entry.platform === platform)
+  const mainLink = recommended === undefined ? '#download' : directLink(recommended.file)
+  const mainLabel =
+    recommended === undefined ? t.home.download : t.home.downloadFor({ platform: recommended.name })
+</script>
+
+<section class="hero" aria-labelledby="title">
+  <div class="hero-text">
+    <p class="kicker">{t.home.kicker}</p>
+    <h1 id="title">DQ9<span>Recomp</span></h1>
+    <p class="tagline">
+      <em>{t.home.game}</em>{t.home.tagline}
+    </p>
+
+    <div class="actions">
+      <a class="button-gold" href={mainLink}>{mainLabel}</a>
+      <a class="button" href={RELEASES_PAGE}>{t.home.allReleases}</a>
+    </div>
+
+    <p class="release">
+      {#if release !== null}
+        {t.home.version} <strong>{release.name}</strong> {t.home.released({ date: new Date(release.publishedAt) })}
+      {:else}
+        {t.home.latest}
+      {/if}
+    </p>
+  </div>
+
+  <div class="hero-dialogue">
+    <Window>
+      <p class="dialogue">
+        <span class="line line1">{t.dialogue.line1}</span>
+        <span class="line line2">{t.dialogue.line2}</span>
+        <span class="line line3">{t.dialogue.line3}</span>
+        <span class="next" aria-hidden="true">▼</span>
+      </p>
+    </Window>
+  </div>
+</section>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+    gap: clamp(2rem, 5vw, 4rem);
+    align-items: center;
+    max-width: 72rem;
+    min-height: min(78vh, 46rem);
+    margin: 0 auto;
+    padding: clamp(2.5rem, 8vh, 5rem) 0;
+  }
+
+  .kicker {
+    margin: 0 0 0.75rem;
+    font-family: var(--font-menu);
+    color: var(--sky-light);
+    letter-spacing: 0.08em;
+    animation: rise 0.7s ease-out both;
+  }
+
+  h1 {
+    margin: 0;
+    font-family: var(--font-title);
+    font-weight: 700;
+    font-size: clamp(3rem, 7.4vw, 5.6rem);
+    line-height: 0.95;
+    letter-spacing: 0.02em;
+    color: #fff;
+    text-shadow: 0 0 40px rgba(232, 182, 76, 0.35), 0 4px 0 #0a0f1f;
+    animation: rise 0.7s 0.1s ease-out both;
+  }
+
+  h1 span { color: var(--gold) }
+
+  .tagline {
+    max-width: 36rem;
+    margin: 1.5rem 0 2rem;
+    font-size: 1.12rem;
+    line-height: 1.7;
+    color: var(--text-soft);
+    animation: rise 0.7s 0.2s ease-out both;
+  }
+
+  .tagline em { color: var(--text); font-style: normal }
+
+  .actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.9rem;
+    animation: rise 0.7s 0.3s ease-out both;
+  }
+
+  /* Le bouton principal du lanceur : doré, texte brun sombre. */
+  .button-gold, .button {
+    display: inline-flex;
+    align-items: center;
+    min-height: 3.25rem;
+    padding: 0 1.6rem;
+    font-family: var(--font-menu);
+    font-size: 1.1rem;
+    text-decoration: none;
+    border-radius: 10px;
+    transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+  }
+
+  .button-gold {
+    color: #1e1606;
+    background: linear-gradient(180deg, var(--gold-light), var(--gold));
+    border: 1px solid var(--gold-light);
+    box-shadow: 0 0 0 3px rgba(232, 182, 76, 0.18), 0 10px 30px -10px rgba(232, 182, 76, 0.7);
+  }
+
+  .button {
+    color: var(--text);
+    background: var(--raised);
+    border: 1px solid var(--border);
+  }
+
+  .button-gold:hover, .button-gold:focus-visible { transform: translateY(-2px); box-shadow: 0 0 0 4px rgba(248, 208, 120, 0.3), 0 14px 34px -10px rgba(232, 182, 76, 0.85) }
+  .button:hover, .button:focus-visible { background: var(--hover); border-color: var(--gold) }
+  .button-gold:focus-visible, .button:focus-visible { outline: 2px solid #fff; outline-offset: 3px }
+
+  .release {
+    margin: 1.1rem 0 0;
+    font-size: 0.92rem;
+    color: var(--weak);
+    animation: rise 0.7s 0.4s ease-out both;
+  }
+
+  .release strong { color: var(--gold-light); font-weight: 400; font-family: var(--font-menu) }
+
+  /* --- La fenêtre de dialogue : les lignes arrivent une à une ------------ */
+
+  .hero-dialogue { animation: rise 0.8s 0.5s ease-out both }
+
+  .dialogue {
+    display: grid;
+    gap: 0.6rem;
+    margin: 0;
+    font-family: var(--font-menu);
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+
+  .line { animation: fade-in 0.5s ease-out both }
+  .line1 { animation-delay: 0.9s }
+  .line2 { animation-delay: 1.5s }
+  .line3 { animation-delay: 2.1s }
+
+  .next {
+    justify-self: center;
+    color: var(--gold);
+    font-size: 0.9rem;
+    animation: fade-in 0.3s 2.6s both, bounce 0.9s 2.9s ease-in-out infinite;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(14px) }
+    to { opacity: 1; transform: none }
+  }
+
+  @keyframes fade-in {
+    from { opacity: 0 }
+    to { opacity: 1 }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0) }
+    50% { transform: translateY(4px) }
+  }
+
+  @media (max-width: 60rem) {
+    .hero { grid-template-columns: 1fr; min-height: 0 }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .kicker, h1, .tagline, .actions, .release, .hero-dialogue, .line, .next { animation: none }
+  }
+</style>

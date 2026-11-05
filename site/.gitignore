@@ -1,0 +1,5 @@
+node_modules/
+dist/
+.serveur/
+# Le catalogue compilé : régénéré par `bun run i18n` et par le build.
+src/lang/*.ts

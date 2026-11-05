@@ -1,0 +1,735 @@
+{
+  "updated": "2026-11-05",
+  "domains": [
+    {
+      "name": "Extraction et formats",
+      "items": [
+        {
+          "name": "ROM DS, overlays, NitroFS et compression BLZ",
+          "state": "done"
+        },
+        {
+          "name": "Archives NARC et GPC2 (.gp2)",
+          "state": "done"
+        },
+        {
+          "name": "Compressions Level-5 et Nintendo (LZ10, LZ11, Huffman, RLE)",
+          "state": "done"
+        },
+        {
+          "name": "Modèles BMD0, textures TEX0 et squelettes BCA0",
+          "state": "done"
+        },
+        {
+          "name": "Animations de matériaux et de textures (BMA0, BTA0, BTP0)",
+          "state": "done",
+          "note": "jouées par le moteur ; glTF : BTA0 et BMA0 par KHR_animation_pointer, BTP0 en images + extras (glTF n'anime pas l'indice de texture)"
+        },
+        {
+          "name": "cfgbin Level-5 (.bin, .bcfg, .bact…)",
+          "state": "done",
+          "note": "55 460 fichiers reconstruits à l'identique"
+        },
+        {
+          "name": "Tables .nat",
+          "state": "done",
+          "note": "NatTable lit les 593 tables (simples, objets, paires, enchab, mons_info2) à l'octet près"
+        },
+        {
+          "name": "Textes du jeu (export, import, aller-retour exact)",
+          "state": "done"
+        },
+        {
+          "name": "Réinjection des textes et dossier mods/",
+          "state": "done",
+          "note": "dq9-text import écrit dans mods/, lu par le moteur avant les assets ; dq9-text build-rom réinjecte mods/ dans une ROM .nds (archives .gp2 reconstruites, NitroFS, FAT et CRC d'en-tête ; aller-retour vérifié à l'octet près) ; pas encore essayée en émulateur, NARC non gérées (aucun texte)"
+        },
+        {
+          "name": "Son SDAT (séquences, banques, ondes)",
+          "state": "done",
+          "note": "séquences, banques, ondes et les 3 flux STRM de bgm.sdat"
+        },
+        {
+          "name": "Graphismes 2D Nitro (RGCN, RLCN, RECN, RNAN) et sprites .spr",
+          "state": "done",
+          "note": "tuiles, palettes, cellules, animations ; rendu RGBA"
+        },
+        {
+          "name": "Collisions .col2",
+          "state": "done",
+          "note": "grille en quinconce, boîtes, enregistrements de sol (scène de combat, sorte de sol) ; pas d'attribut mur/eau dans le fichier"
+        },
+        {
+          "name": "Vidéos Mobiclip",
+          "state": "done",
+          "note": "décodeur Rust, identique à FFmpeg au pixel près"
+        }
+      ]
+    },
+    {
+      "name": "Rendu 3D et cartes",
+      "items": [
+        {
+          "name": "Rendu wgpu des modèles Nitro (GX, skinning, haute résolution, MSAA)",
+          "state": "done"
+        },
+        {
+          "name": "Graphe de scène .bmdj et disposition .bmbl",
+          "state": "done"
+        },
+        {
+          "name": "Intérieurs, régions et sorties",
+          "state": "done"
+        },
+        {
+          "name": "Animations de squelette interpolées",
+          "state": "done"
+        },
+        {
+          "name": "Animations de matériaux et de textures (eau, fumée, visages)",
+          "state": "done",
+          "note": "images de texture (.nsbtp) des objets de la carte jouées aussi : flammes des torches de l'Observatoire, chacune sur sa propre durée"
+        },
+        {
+          "name": "Jour et nuit des cartes",
+          "state": "done",
+          "note": "quatre phases de l'horloge, lumière des zones (.bats) : villes et champs ; brouillard matériel des zones (balise 105) sur les cartes, portes, personnages et décors des scènes, les transparents gardant leur alpha comme sur DS ; pas encore comparé au jeu en marche, ni appliqué au combat"
+        },
+        {
+          "name": "Ombres rondes « kage »",
+          "state": "done"
+        },
+        {
+          "name": "Particules .beff (effets du terrain)",
+          "state": "done",
+          "note": "combat et scènes ; les cartes ne posent pas de .beff (fumées et feux : modèles animés) ; effets d'écran .mse affichés ; traînée ev999993320 lancée par R derrière l'Express en vol, jusqu'à la sortie du ciel"
+        },
+        {
+          "name": "Orientation des billboards vers la caméra",
+          "state": "done",
+          "note": "sprites des villageois ; modèles : commandes BB/BBY (0x07/0x08) de 1 434 modèles, faites par le shader avec la vue ; pas dans l'export glTF"
+        },
+        {
+          "name": "Toutes les cartes du jeu chargées",
+          "state": "done",
+          "note": "mer en deux archives, nœuds de forme courte ; codes tronqués à 6 caractères comme le jeu (R05M01a…) ; textures liées comme le jeu : 41 matériaux sans texture dans la ROM, dessinés sans texture"
+        },
+        {
+          "name": "Teint et palettes choisies en jeu (cheveux, peau)",
+          "state": "done",
+          "note": "création du personnage ; peau montrée par chaque pièce d'équipement selon sa fiche d'objet (2, 4 ou 8 nuances), crânes rasés ; pas de variante de couleur par objet dans les données"
+        }
+      ]
+    },
+    {
+      "name": "Terrain (déplacement, caméra, collisions, portes, trésors)",
+      "items": [
+        {
+          "name": "Déplacement du héros au clavier et à la manette",
+          "state": "done"
+        },
+        {
+          "name": "Collisions avec les murs et le sol",
+          "state": "done",
+          "note": "eau peu profonde praticable là où le sol du col2 passe à la hauteur du sol visible (fond des puits : 14 arrivées vérifiées)"
+        },
+        {
+          "name": "Caméra du terrain (modes, recul devant les murs)",
+          "state": "done",
+          "note": "lacet par défaut de la carte (maplist9), rotation bornée à ±45°, recentrage L+R du jeu ; zones de caméra des .bmbl (sorte 4, mélange selon la distance au plan, 0x020A29AC ; rotation interdite selon la zone) ; aucun recul devant les murs, comme le jeu (aucun test de collision de caméra) ; roulis des scènes remis à 0 à leur fin ; tremblement de 193 ; balancement des scènes (803) et des cartes 5900–5903 ; plans proche et lointain du jeu (1 et 400) ; rapprochement pendant les gestes du héros (+0x2C4, permis par la valeur 21 de maplist9)"
+        },
+        {
+          "name": "Portes : poussée, pivot, fondu, masquage",
+          "state": "done",
+          "note": "code du jeu, bruit 200 + n° ; zone de chaque porte par le nœud qui la pose (corrigé le 3 nov.)"
+        },
+        {
+          "name": "Passages gardés et portes fermées à clef",
+          "state": "done"
+        },
+        {
+          "name": "Trésors : coffres, pots, tonneaux, meubles, avec leurs bruits",
+          "state": "done"
+        },
+        {
+          "name": "Points de récolte",
+          "state": "done"
+        },
+        {
+          "name": "File du groupe élastique et cercueils des membres à terre",
+          "state": "done",
+          "note": "mouvements des suiveurs lissés, avec fondu"
+        },
+        {
+          "name": "Monstres visibles et rencontres",
+          "state": "done",
+          "note": "tables encfld et encbtl (zones, heure, masque de régions, cadence, poids) ; graphe path.gp2 sur le terrain et graphe des grottes bâti comme 0x0201A310 (sous-cases .bpos, arrivée sans apparition, monstres du rang) ; apparition 0x020733E8 (nœud du héros suivi comme 0x020339D8) ; comportements fld_mondata, états 0–8, 10 et 12 (repérage en cône ou en cercle, « ! » dessiné avec son saut et le son 6, fuir ou approcher, poursuite, charge, fuites) ; fondus d'apparition, de téléportation et de fuite ; disparition hors de ±25 ; contact (rayon du héros 1,0) ; groupe 0x0209AFE4 (zone du sol, combat préparé, meneur et compagnons) sur le générateur W, le reste sur rand() ; invulnérabilité de 2,5 s après un combat ; non repris : l'état 9 (attaché), l'autre fabrique de groupes 0x0209B458, les graines du jeu (rand() réensemencé sur l'horloge) ; l'état 11 est du jeu à plusieurs"
+        },
+        {
+          "name": "Mini-carte et écran du haut",
+          "state": "done"
+        },
+        {
+          "name": "Tours du groupe (attitudes)",
+          "state": "done",
+          "note": "écran « Attribuer des attitudes » de l'overlay 2 (7 places, liste des 31, inconnues « ?????? »), apprentissage par les drapeaux 0xC02+ (action 142), bandeau du terrain (B tenu), fonction 119, places gardées dans le journal et lues des sauvegardes DS ; placement de quelques libellés supposé"
+        },
+        {
+          "name": "Horloge du jour en temps de jeu",
+          "state": "done",
+          "note": "420 s, seulement dans les champs, sur la mer et dans le ciel"
+        },
+        {
+          "name": "Voyages : Zoom, aile de chimère, Évacué",
+          "state": "done",
+          "note": "Zoom, aile de chimère, Évacué et évacuo-cloche"
+        },
+        {
+          "name": "Navigation en bateau et vol de l'Orion Express sur la carte du monde",
+          "state": "done",
+          "note": "bateau : embarquer, naviguer, débarquer aux rives ; Express céleste : arrêts et trajets, vol libre sur le ciel (toujours en avant, croix vers 8 directions, voitures attelées, monde replié), « Descendre ici ? » vers le sol sous l'Express (points d'atterrissage de sorte 11), passage dans la voiture, retour au royaume, place gardée dans le journal ; ombres de l'Express (plus sombres où l'on peut descendre) ; sifflet d'Aster (départ d'un champ ou d'une ville vers le ciel) ; montée dans l'Express (effet ev999993400, le groupe qui disparaît) ; sillage et rides du bateau en mer (archives GPC1 ev99_ship/ev99_liner)"
+        }
+      ]
+    },
+    {
+      "name": "PNJ et dialogues",
+      "items": [
+        {
+          "name": "Placement selon l'histoire et l'heure (npc.bin, place.bin)",
+          "state": "done"
+        },
+        {
+          "name": "Villageois en sprites orientés et personnages en 3D animés",
+          "state": "done",
+          "note": "un modèle sans attente stand joue son seul mouvement et ses animations de matériaux (éclat s097 de la bague d'Angel Falls)"
+        },
+        {
+          "name": "Répliques selon l'étape, la nuit et les étiquettes",
+          "state": "done"
+        },
+        {
+          "name": "Fenêtre de dialogue et police bitmap du jeu",
+          "state": "done"
+        },
+        {
+          "name": "Questions Oui/Non",
+          "state": "done"
+        },
+        {
+          "name": "Bulle au-dessus des personnages",
+          "state": "done",
+          "note": "icônes et animations du jeu (visage, « ! » bleu/rose, marque, « ? »), types de l'enr. 18 (« ! » sur le héros), hauteur, bulles des scènes 541/561/542 ; toutes les demandes du jeu en solo d'après ov17 : PNJ, portes (4), pots et tonneaux, coffres fermés (2), points de récolte (3), étagères (6), meubles (7, zones .bmbl de sorte 5), sorties à Valider (8, prises seulement avec Valider, comme le jeu), amarre (0xB) ; la plus petite priorité l'emporte (0x0219B33C) ; les sortes 1, 9, 0xA, 0xD, 0xE sont du jeu à plusieurs ; supposé : l'ordre entre les passes à priorité égale"
+        },
+        {
+          "name": "Balises de texte (genre, nombre, héros, services)",
+          "state": "done",
+          "note": "<HERO>, majuscules, services (<SHOP>, <CHURCH>, <INN>, <BANK>, <LUIDA>, <RENKIN>, <DAMA>), genre du héros, héros seul ou en groupe, équipe féminine (terrain et combat), élision d'après le nom, fanfares <ME_…> et <QUEST_SE>, <QUEST_HAN>, <QUEST_FAILED>"
+        },
+        {
+          "name": "Mouvements des PNJ (rondes, marche autonome)",
+          "state": "done",
+          "note": "errance, va-et-vient, chemins ; arrêt près du héros"
+        },
+        {
+          "name": "Rotation progressive vers le héros et retour",
+          "state": "done"
+        },
+        {
+          "name": "Collision des PNJ avec le héros",
+          "state": "done"
+        },
+        {
+          "name": "Répliques liées aux quêtes",
+          "state": "done",
+          "note": "répliques de type 2 selon l'état de la quête"
+        }
+      ]
+    },
+    {
+      "name": "Scènes et scripts",
+      "items": [
+        {
+          "name": "Machine virtuelle SB2 (.stb)",
+          "state": "done"
+        },
+        {
+          "name": "Fonctions de script de scène : 216/216",
+          "state": "done",
+          "note": "216/216 traitées (14 réponses fixes, 23 sans objet), 715/715 scènes complètes (audit du 2 novembre, evl_quest.bin compris) ; 8/9 (GameState+0x5CAC) sans objet en solo, tous les lecteurs relevés ; 0 = boutons A/B/X/Y tenus, 2 = écran tactile (0)"
+        },
+        {
+          "name": "Personnages des scènes (distribution, mouvements .bcfg, accroches aux os)",
+          "state": "done",
+          "note": "chemins 214–217 comme le jeu (points de 216 seuls, durée = vitesse de 215 en tranches de 17 ms partagée entre les tronçons) ; ailes et auréole du héros célestellien gardées pendant les scènes, ailes seules cachées au démarrage d'une scène evspt_lv5 (0x021552A8)"
+        },
+        {
+          "name": "Caméra des scènes (orbites, interpolations, caméra portée par les os)",
+          "state": "done"
+        },
+        {
+          "name": "Trajets en courbe et déplacements",
+          "state": "done"
+        },
+        {
+          "name": "Messages, légendes et fondus",
+          "state": "done"
+        },
+        {
+          "name": "Effets des scènes et échelle",
+          "state": "done",
+          "note": "émetteurs .beff des effets chargés par 200 (aucune scène ne nomme de .beff) ; traînée ev999993320 de l'Express sur R"
+        },
+        {
+          "name": "Déclencheurs : conditions",
+          "state": "done",
+          "note": "81 conditions sur 81 ; supposées : 74 (objet du dernier butin) et 500 (invités spéciaux, toujours faux) ; jeu à plusieurs (502, 504, 505, 506) faux"
+        },
+        {
+          "name": "Déclencheurs : actions",
+          "state": "done",
+          "note": "93 actions sur 93, d'après le code du jeu : donner un objet (189, 229), quêtes avec objets (156, 157), portes 136/153, état céleste 151, soins 203/213, mécanismes de carte, 106, 164/221, 180, 185, 206, 218, 232, et l'après-jeu 212, 219, 227 ; plusieurs ne sont vérifiées que par les tests (pas vues en jeu)"
+        },
+        {
+          "name": "Types de déclencheurs 22, 23, 27, 30",
+          "state": "done",
+          "note": "22 (après un combat gagné), 23 (pot ou tonneau examiné), 27 (carte au trésor reçue), 30 (chargement d'une carte)"
+        },
+        {
+          "name": "Outil d'audit des scripts",
+          "state": "done"
+        }
+      ]
+    },
+    {
+      "name": "Histoire, quêtes et contenus annexes",
+      "items": [
+        {
+          "name": "Prologue et ouverture",
+          "state": "done",
+          "note": "vérifié par parcours automatique"
+        },
+        {
+          "name": "Chapitre 1",
+          "state": "done",
+          "note": "vérifié par parcours automatique"
+        },
+        {
+          "name": "Chapitre 2 (jusqu'à Stornway)",
+          "state": "done",
+          "note": "vérifié par parcours automatique"
+        },
+        {
+          "name": "Chapitres 3 à 5",
+          "state": "done",
+          "note": "vérifié par parcours automatique"
+        },
+        {
+          "name": "Fils de l'histoire après le chapitre 5",
+          "state": "done",
+          "note": "chapitres 6 à 12 vérifiés par parcours automatique, puis l'Express et ev28800"
+        },
+        {
+          "name": "Chapitres 13 à 15",
+          "state": "done",
+          "note": "vérifiés par parcours automatique (Gadrongo, Upover et le mont, Gortress, Gittingham)"
+        },
+        {
+          "name": "Chapitres 16 à 19",
+          "state": "partial",
+          "note": "chapitres 16.2 et 17 joués par tronçons jusqu'au boss final (Observatoire, Express céleste, Royaume des Puissants, boss 20 à 25) ; pas encore d'une traite avec une vraie équipe (monstres imposés pour les essais)"
+        },
+        {
+          "name": "Fin du jeu et après-jeu",
+          "state": "done",
+          "note": "fin déroulée : boss final, générique avec sa musique BG_043 (≈ 306 s, durée concordante), sauvegarde de fin avec la plume pen.pac (832) et lieu de reprise 109, épilogue rejoué au chargement (bit 0x1142), titres de fin title_clr ; après-jeu : retour au royaume du Puissant (212), invités de presetdt (219) et scène 20986 jouée, ascenseur des suites royales (227) avec la scène de la montée ev53351…53354 (rang 0 en solo) ; Célestelle (memory2.stb, fonction 91) : visite au royaume du Puissant, retours par la porte, Zoom, l'aile, la cloche ou l'anéantissement (vus en jeu), textes 2/3/4 avec le héros tourné vers elle, fin 2, fin rejouée après la revanche contre Corvus ; supposés : animation « save » de la plume, aile de chimère = Zoom, or perdu dans le royaume ; hors solo : héros légendaires, rang du Quester's Rest, quêtes téléchargées"
+        },
+        {
+          "name": "Quêtes (offre, journal, récompenses)",
+          "state": "done",
+          "note": "états, journal (écran), offre des donneurs, actions, conditions, compteurs, répliques par état, fanfares <QUEST…> ; scripts de fin de combat (docs/arm9-quetes-combat.md : registre des monstres vaincus, 49 fonctions de quest_btl, 110 sections, répliques btl_qmes, bits 14/15, objets, drapeaux, événements, objets de quête volés par la Fauche) ; compteurs d'actions 0 à 9 tous joués (8 : moaï marrant sous Sous les projecteurs, riposte de colère tenue ; 9 : cannibelle en colère, quête 139), quêtes 188 (Express) et 174/193 (grottes) ; tests sur les vrais scripts ; supposées : fonctions 39 et 43 (mise en scène) ; quêtes de combat à voir pendant une partie"
+        },
+        {
+          "name": "Grottes au trésor et cartes au trésor",
+          "state": "done",
+          "note": "génération identique au jeu (fiche, étages, pièces 3D, monstres, coffres) ; étages, monstres, coffres, boss et boss légendaires vérifiés à l'écran ; menu des cartes (suivre, arrêter, abandonner, refus dans une grotte ; seule la carte choisie est suivie, comme le jeu), avec l'écran du haut de la DS par Détails (image de l'emplacement, nom et niveau, record de tours, trésors et chances, découvreur et vainqueur) et les trois tris (statut, niveau, type) ; carte reçue en butin ou par l'action 178 (strstd 64, à 99 cartes strstd 65 et choix de la carte à abandonner) ; scène de la fouille (éclair, « X repère un antre ! ») et quêtes 174/193 à l'entrée ; supposés : icônes d'état et marque de la carte suivie en caractères, butins pas encore obtenus non masqués dans la fiche ; parcours complet d'une grande grotte à la main à faire en partie de test"
+        },
+        {
+          "name": "Jeu à plusieurs (Wi-Fi local)",
+          "state": "later",
+          "note": "v2 : multijoueur, après la version solo"
+        },
+        {
+          "name": "Mode Tag et invités",
+          "state": "partial",
+          "note": "en différé (rencontre.rs, erinn.rs, field/canvass.rs) : carte de visite et paquet du jeu, fichiers d'échange (rencontre/envoi, rencontre/recus), séance chez Bérangère (3 cartes, refus du jeu, sauvegarde), registre des 30 invités, rang et hall du Quester's Rest, invités dans les salles (modèle par vocation et sexe), leur réplique profsen et leur carte au trésor, registre (suites royales, départ), record et titres « clients démarchés » ; paramètres de profil (lieu, anniversaire, style, âge caché), auberge de Bérangère, carte au trésor emportée, registre et carte lus dans une sauvegarde DS ; message de présentation (clavier du jeu, de l'appareil, saisie Android) ; reste : service d'échange"
+        },
+        {
+          "name": "Connexion Wi-Fi (DLC, quêtes et objets téléchargeables)",
+          "state": "partial",
+          "note": "hors ligne : VPC DQ de Vanda (stock du jour d'après la date du système, catalogue historique des 52 semaines européennes, achat, équipement ; prix et quantités supposés), première visite qui livre les 64 quêtes téléchargées et les héros légendaires (conditions 502, 506) ; reste : transmission du journal, enchères japonaises (sans objet en Europe)"
+        },
+        {
+          "name": "Mini-médailles, bestiaire, accolades",
+          "state": "done",
+          "note": "mini-médailles (remise au capitaine, paliers, échange), bestiaire (comptes, fiches, butins), accolades : 444 titres, scripts de titres du jeu (combat, compétences, compteurs), renouvocations, annonces, livre « Distinctions reçues », records, choix du titre porté (menu Divers), liste d'objets et armoire (objets eus) ; ni attitudes, ni herbes"
+        }
+      ]
+    },
+    {
+      "name": "Combat",
+      "items": [
+        {
+          "name": "Attaque normale et dégâts",
+          "state": "done",
+          "note": "formule du jeu, troncature"
+        },
+        {
+          "name": "Coups critiques du groupe",
+          "state": "done",
+          "note": "2 %"
+        },
+        {
+          "name": "Ordre des tours à l'agilité",
+          "state": "done",
+          "note": "agilité × U(0,51 ; 1), surprise des rencontres selon la rencontre et l'adresse"
+        },
+        {
+          "name": "IA des monstres et actions par espèce",
+          "state": "done",
+          "note": "modes 0/1/2, ciblage pondéré, sorts, souffles, soins, tension, coups à statut, repli sur les autres emplacements, renforts (même espèce ou autre, 5 monstres au plus), fusion des gluants (kind 58), gestionnaires de ciblage 1, 2, 3/4, 40, 54, 77, colère ; actions sur les siens : Rappel, Résurrection et feuille d'Yggdrasil (kind 18), Accompagnement et tension (15), Conjuration (33), Drôle de danse (57, déjouée par le Bon esprit) ; monstre relevé compté une fois au butin ; supposés : jet de précision du Rappel, ordre des groupes de la Conjuration"
+        },
+        {
+          "name": "Sorts (soins, attaques) avec effets et sons",
+          "state": "done",
+          "note": "soins, attaques, sorts d'état, soins d'état, retour à la vie, niveaux d'attaque/défense/agilité ; effets et sons"
+        },
+        {
+          "name": "Objets en combat",
+          "state": "done",
+          "note": "soins, PM, soins d'état, panacées, retour à la vie, dégâts, statuts, niveaux, tour perdu ; code du jeu relu"
+        },
+        {
+          "name": "Défendre, Fuir, fuite des monstres",
+          "state": "done"
+        },
+        {
+          "name": "Combat à plusieurs et invités",
+          "state": "done"
+        },
+        {
+          "name": "Victoire, expérience partagée, montée de niveau, défaite",
+          "state": "done"
+        },
+        {
+          "name": "Butin des monstres",
+          "state": "done",
+          "note": "objet rare puis ordinaire, 1 sur N, messages du jeu"
+        },
+        {
+          "name": "Esquive, parade et résistances",
+          "state": "done",
+          "note": "esquive (2 % du groupe, grades des monstres), parade des monstres et du groupe au bouclier, résistances aux éléments (équipement, fiches des monstres), gardes d'élément (Forces −50, protection divine et lumière sinistre ±25), Réflexion, Antimagie ; gardes pas encore vues en combat"
+        },
+        {
+          "name": "Effets spéciaux de l'équipement",
+          "state": "done",
+          "note": "itembtlprm lu en entier (code du jeu relu) : lame du Faucon (deux passes), fouets et boomerangs (groupe, tous, dégressif), épée miracle (PV), éléments des armes, facteurs contre les familles, aiguille empoisonnée, tueuses de métal, arme rouillée, coups qui ne se parent pas, dagues qui agissent d'abord, statuts portés par l'arme, santé, armure de piques, renvoi des sorts, absorboléro, pièces maudites, chaussures à talons ; effets en marchant (bits 14, 15, 22) ; drapeau 0x10 du terrain établi (terrain arrêté : scène, départ au combat, 828), tenu par la marche libre ; lame du Faucon jouée (son cadrage à l'écran relève de la mise en scène)"
+        },
+        {
+          "name": "Statuts (sommeil, poison, paralysie, confusion…)",
+          "state": "done",
+          "note": "sommeil, paralysie, confusion, venin, compteurs et tables du jeu, tour perdu (danses, terreur)"
+        },
+        {
+          "name": "Tension et coups de grâce",
+          "state": "done",
+          "note": "tension des monstres et du groupe ; coups de grâce des douze vocations (kinds 67 à 74)"
+        },
+        {
+          "name": "Compétences (commande Aptitudes) et combos",
+          "state": "done",
+          "note": "commande Aptitudes, gestionnaires des kinds (67), buffs, combos, coopérations (Quadrilacère, Omnipotension, Sorts à gogo, Culbutin : expérience et or × 1,5–2, butin garanti), postures (Contre-attente, Bouclier humain, Abnégation, Altruisme, Toi-même), Kill, Confusion, Antimagie, Illusion, Sortallège / Isolation, Réflexion, Perturbonde, Mot juste, Sous les projecteurs et la colère complète (Paradin, Sifflet, critiques, soins et retours à la vie, dégâts sous la moitié ou le quart des PV : déclencheurs 3/4 du kind 1, riposte de colère avec sa ligne 530, vue au journal du combat), Relooking et charme qui subjugue (testé par la formule), Fauche, Métaluminescence, Bon esprit, Hérixe, parade au bouclier des équipements et des panneaux 34/36/38 ; supposé : la riposte n'est qu'une ligne (action 921 et sa caméra non jouées) ; non tenu : bit 13 de statut+0x18"
+        },
+        {
+          "name": "Mise en scène (caméra, effets, messages du jeu)",
+          "state": "done",
+          "note": "scripts .bact joués (caméra, effets, réactions, sons), pistes .beff B/D/H ; ralenti, lumière de la scène et tremblement du présentateur (stage.rs : opcodes 96, 116, 80, mouvements magic) ; mort sur le coup (effet 27, lumière, ralenti), sort renvoyé (effet 14, tremblement, ralenti), contre-attaque (effet 34, mouvement counter) et coup détourné (effet 35), Paradin (effet 25), critique de monstre (effet 36), étincelle d'Hérixe (31), contre-attaque du seigneur saigneur (effet 26, Contre-attente des monstres), souffle renvoyé par Vent contraire (effet 32, kind 32) ; séquence faucon vue en capture ; la liste A des .bcfg n'a aucun lecteur dans le code ; riposte de colère (921) : une ligne seule, comme le jeu (établi) ; aptitudes du combat filtrées par l'arme en main ; listes du combat par pages"
+        }
+      ]
+    },
+    {
+      "name": "Équipe, vocations, compétences",
+      "items": [
+        {
+          "name": "Création du personnage",
+          "state": "done",
+          "note": "huit étapes du jeu (overlay 9), fonds et grilles des deux écrans côte à côte, rangs « Type N » et valeurs de départ, stature gardée (carrure), L/R pour pivoter, musique 2 et sons ; nom au clavier du jeu parcouru à la croix (keyboard_cm.bin), au clavier du PC ou par la boîte de saisie Android ; caméras de l'aperçu d'ov9 (normale, visage et yeux, fin au centre) et leur transition ; fin complète d'après ov9 0x02187B34 : aperçu tourné de face, récapitulatif assombri, ailes d_hane, effet ev999993000, sons 0 et 1 de l'archive 111, fondus blanc puis noir ; aperçu par la figurine chara_pd du jeu (21 os, mains et pieds) et son mouvement start ; le récapitulatif et son fond s'assombrissent en 90 images après le Oui, puis le fond reste noir derrière la figurine comme sous le quad noir d'ov23 (0x021DAC40) ; toucher et souris sur l'écran du bas (numéros, grille, L/R, A/B, Oui/Non, clavier) ; manette tactile Android hors de l'écran du bas ; musique d'une recrue (celle de la taverne, éteinte au Oui) ; stature vue sur le terrain ; fin jouée sur toute la fenêtre, personnage seul au centre (choix du portage) ; une recrue finit par un simple fondu au noir (choix du portage)"
+        },
+        {
+          "name": "Recrutement chez Tulipe (Quester's Rest)",
+          "state": "done"
+        },
+        {
+          "name": "Compagnon de l'histoire",
+          "state": "done"
+        },
+        {
+          "name": "Caractéristiques par niveau de vocation",
+          "state": "done",
+          "note": "table des niveaux, graines, panneaux de compétence, bonus d'équipement"
+        },
+        {
+          "name": "Équipement et pièces visibles",
+          "state": "done",
+          "note": "vocations, sexe, héros seul, pièces maudites ; modèle de chaque pièce d'après sa fiche (selon le sexe), gants, couvre-chef (avec la coiffure qui va dessous), bouclier, armes de toutes les sortes placées par wpnpos.bin (griffes par paire), vérifiées à l'écran ; jeu de mouvements par buste et arme ; carrure de la fiche ; au contact, le script d'arme est joué en entier (élan, traînée, impact, réactions) ; fouet déployé, arc bandé et boomerang lancé ; armes à distance jouées par leur script entier (lancer, plan de la cible 12 9 / 12 6, puis les dégâts) ; figurine chara_pd de l'overlay 23 dans la création et l'écran Équiper (de face, stand, arme en main, griffes sur les avant-bras) ; vignettes des pièces portées sur la fiche d'état ; toute pièce portée s'enlève (buste, jambes et pieds laissent le corps nu), sauf les maudites"
+        },
+        {
+          "name": "Sorts appris par niveau",
+          "state": "done"
+        },
+        {
+          "name": "Points et panneaux de compétences",
+          "state": "done",
+          "note": "26 arbres, points par niveau, écran de répartition, bonus des panneaux"
+        },
+        {
+          "name": "Changement de vocation (Abbaye)",
+          "state": "done",
+          "note": "niveaux et expérience par vocation ; sans équipement par vocation"
+        },
+        {
+          "name": "Vocations avancées et renouvocation",
+          "state": "done",
+          "note": "vocations avancées (action 160), renouvocation au niveau 99 (action 231)"
+        },
+        {
+          "name": "Expérience et équipement par vocation",
+          "state": "done",
+          "note": "expérience par vocation ; tenue gardée par vocation : tout au sac au changement, la tenue de la nouvelle vocation reprise du sac (ov3 0x021558E0) ; cas de la distinction du caméléon non fait"
+        },
+        {
+          "name": "Graines et plafonds",
+          "state": "done"
+        }
+      ]
+    },
+    {
+      "name": "Menus et interface",
+      "items": [
+        {
+          "name": "Logos, écran titre et menu principal",
+          "state": "done",
+          "note": "logos, titre, menu, effacement du journal"
+        },
+        {
+          "name": "Menu du terrain : objets",
+          "state": "done",
+          "note": "à qui (8 cases par membre) ou le sac (objets courants, équipement, importants, organiser par type ou par nom) ; utiliser, transférer, abandonner, détails ; graines par vocation"
+        },
+        {
+          "name": "Menu du terrain : équipement",
+          "state": "done",
+          "note": "écran dédié de l'overlay 5 (fond, cadre, onglets des 8 places, grille 4 × 4 des vignettes d_*.spr, « É », curseurs), aperçu 3D du membre qui essaie la pièce, comparaison, Détails ; porter, enlever, qui peut porter (vocation, sexe, héros seul), pièces maudites ; tri (Y), Déplacer, Transférer, Abandonner ; armes et boucliers selon les arbres de la vocation ou la maîtrise (100 points), renouvocations"
+        },
+        {
+          "name": "Menu du terrain : caractéristiques",
+          "state": "done"
+        },
+        {
+          "name": "Menu du terrain : sorts hors combat",
+          "state": "done",
+          "note": "soins, Soigner tous, Antipoison, Rappel, Résurrection, Zoom, Évacué, Divination, Bénédiction, Invisibilité ; aptitudes des panneaux (forme de terrain) : Mens Sana, Méditation, Passage sûr, Sifflet, Piège, Détectrésor, Marque-magot, Reconversion ; effet de la fosse du Piège sur les monstres supposé, Sifflet sur l'océan non lu"
+        },
+        {
+          "name": "Menu du terrain : compétences et vocations",
+          "state": "done",
+          "note": "points de compétence (Divers) ; vocations à l'Abbaye"
+        },
+        {
+          "name": "Sac et inventaires par personnage",
+          "state": "done",
+          "note": "sac dans l'ordre de ses cases, 99 par sorte ; 8 cases par membre (objets courants), objets reçus selon itemdt bit 25, objets de combat pris dans les cases de chacun ; cases lues des sauvegardes DS ; anciens journaux : soins répartis dans les cases"
+        },
+        {
+          "name": "Menu de combat (commandes, cibles, sorts, objets)",
+          "state": "done",
+          "note": "menu de l'équipe, Aptitudes, Tactiques, Examiner, Équipement, Alignement"
+        },
+        {
+          "name": "Fenêtres des services au-dessus du texte",
+          "state": "done"
+        },
+        {
+          "name": "Écran du haut (double écran DS)",
+          "state": "done",
+          "note": "carte de la zone (minimap.gp2), onglet du lieu, bandes des membres ; carte du monde O00 en mer et dans le ciel : lieux vus (w_offset.bin, drapeaux 0xA96 + carte/100), rond des villes qui bat, héros selon la région courante (0x02026108), bateau ; panneaux de l'équipe (obj_mm : PV/PM, jauges, couleur selon les PV, glissement à 180 px/s, levés pendant le menu, 2 s quand les PV ou PM changent) ; au menu, Détails (Select) montre la fiche du haut (bg_st, bg_ii0) ; « L'histoire jusqu'ici… » ouverte depuis Divers sur toute la fenêtre (choix du portage, Y fait courir) : carte du monde et onglet du lieu, parchemin bg_strdw (titre st_01_fr) avec le résumé str_ol de la page courante (action 197), côte à côte en paysage, l'un sur l'autre en portrait ; supposés : la place du texte sur le parchemin, le fond bg_tm non repris ; non lue : la raison de tenue 1 des panneaux"
+        },
+        {
+          "name": "Journal des quêtes, liste des alchimies, bestiaire",
+          "state": "done",
+          "note": "journal des quêtes, Alchimanach, bestiaire"
+        }
+      ]
+    },
+    {
+      "name": "Services (auberge, boutiques, église, alchimie)",
+      "items": [
+        {
+          "name": "Auberge (nuit, repos, prix par tête)",
+          "state": "done"
+        },
+        {
+          "name": "Magasins : achat et équipement immédiat",
+          "state": "done"
+        },
+        {
+          "name": "Magasins : revente selon la fiche",
+          "state": "done"
+        },
+        {
+          "name": "Église : confession, divination, résurrection",
+          "state": "done"
+        },
+        {
+          "name": "Église : purification et bénédiction",
+          "state": "done",
+          "note": "poison gardé après le combat, 1 PV toutes les 80 images de marche (jamais sous 1), sols nocifs ; purification 5 G, bénédiction 30 × niveau (pièces maudites au sac), répliques 1041/1042/1051/1052"
+        },
+        {
+          "name": "Retour à la dernière église après défaite",
+          "state": "done",
+          "note": "église de la dernière confession (1106 au début, action 208) ; moitié de l'or en poche"
+        },
+        {
+          "name": "Comptoir de Tulipe",
+          "state": "done",
+          "note": "inviter, recruter (création du personnage), laisser, se séparer"
+        },
+        {
+          "name": "Alchimie (chaudron Krak)",
+          "state": "done",
+          "note": "recettes, petit bonheur, alchimiracle, Alchimanach ; titres d'alchimie par les accolades"
+        },
+        {
+          "name": "Banque",
+          "state": "done"
+        },
+        {
+          "name": "Échange de mini-médailles",
+          "state": "done"
+        },
+        {
+          "name": "Bibliothèques",
+          "state": "done"
+        }
+      ]
+    },
+    {
+      "name": "Audio et vidéo",
+      "items": [
+        {
+          "name": "Séquenceur et synthé SDAT",
+          "state": "done"
+        },
+        {
+          "name": "Musique des cartes (jour, nuit)",
+          "state": "done",
+          "note": "valeur 6 de maplist9, nuit (3→4, 5→6), remplacements de mapbgm.bin, silence (trous, ≥ 47), pont du bateau à quai à Bloomingdale, demi-volume des puits et sous-sols (valeur 16) ; menu des journaux (2), marmite (8), musique relancée après l'auberge"
+        },
+        {
+          "name": "Musique et fanfares des combats",
+          "state": "done",
+          "note": "musique 23 des combats ordinaires et piste de eventbattle.bin des combats de scène, thèmes d'origine des boss légendaires (pistes 27–38), fanfares de victoire, de niveau et d'anéantissement, musique du terrain reprise là où elle s'était arrêtée après un combat ordinaire ; fanfares des menus (confession 60, soins de l'église 59, pièce maudite 61, alchimie 62)"
+        },
+        {
+          "name": "Bruitages du terrain (portes, trésors, menus)",
+          "state": "done",
+          "note": "portes, coffres, pots, tonneaux, meubles, « ! » des monstres ; menus (son 1 à l'ouverture et à chaque validation, rien au curseur ni sur B), journal (5), incantation (100), poison et sols (120) ; bip du texte (10) ; gestes (table 0x020E7CA4) ; voix 1 et 2 du bip non lues"
+        },
+        {
+          "name": "Sons des combats (se_btl.sdat)",
+          "state": "done",
+          "note": "archive de base 101 et archives d'action ; sons génériques (coups, critiques, esquives, parade, départ d'action, incantation, soin) ; sons des mouvements de monstres (liste B des .bcfg ; la liste A n'a aucun lecteur dans le code) ; 59 = Paradin, 66 = mort sur le coup, 67 = renvoi, 68 = contre-attaque ; 51, 52 et 56 ne sont jamais joués par le jeu"
+        },
+        {
+          "name": "Morceaux et bruitages des scènes",
+          "state": "done",
+          "note": "fonctions 712 à 738 dont 715 (volume), 720 (fanfare en attente), 725, 735 (verrou), 736 (musique de la carte), 737 (fanfare directe), 738 (arrêt du morceau), poignées de bruitages (712/728/732, 723/729), voix du bip (554) ; voix des répliques de Stella (aiguë) et Aster (grave) au guichet de l'Express"
+        },
+        {
+          "name": "Flux audio STRM",
+          "state": "done",
+          "note": "les 3 flux de bgm.sdat, bandes son des cinématiques"
+        },
+        {
+          "name": "Réglage du volume",
+          "state": "done"
+        },
+        {
+          "name": "Cinématiques Mobiclip",
+          "state": "done"
+        }
+      ]
+    },
+    {
+      "name": "Sauvegarde, réglages et lanceur",
+      "items": [
+        {
+          "name": "Journal JSON (carte, histoire, héros, équipe, sac, trésors)",
+          "state": "done",
+          "note": "carte, histoire, quêtes, héros, équipe et Tulipe, sac, trésors, compétences, vocations, recettes, banque, mini-médailles, bestiaire, bateau, horloge, journaux numérotés, cartes au trésor, accolades et records"
+        },
+        {
+          "name": "Sauvegarde automatique et Continuer",
+          "state": "done"
+        },
+        {
+          "name": "Reprise de la partie (position, PV et PM, compagnons)",
+          "state": "done"
+        },
+        {
+          "name": "Plusieurs emplacements et effacement",
+          "state": "done",
+          "note": "effacement à l'écran titre, journaux numérotés (--slot)"
+        },
+        {
+          "name": "Import d'une sauvegarde DS",
+          "state": "done",
+          "note": "import-sav et bouton du lanceur ; testé sur une vraie sauvegarde"
+        },
+        {
+          "name": "Réglages partagés (volume, fenêtre, plein écran)",
+          "state": "done"
+        },
+        {
+          "name": "Touches configurables (clavier et manette)",
+          "state": "done"
+        },
+        {
+          "name": "Application du lanceur",
+          "state": "done",
+          "note": "première scène du moteur, dans la même fenêtre que le jeu ; avant la ROM, assistant egui à thème propre ; ensuite, accueil dessiné par le moteur dans le style du jeu (fond et logo du titre selon l'heure, cadres, police, curseur, musique et sons des menus)"
+        },
+        {
+          "name": "Extraction de la ROM depuis le lanceur",
+          "state": "done",
+          "note": "assistant en étapes (choix ou dépôt de la ROM, vérification YDQP expliquée, extraction, cinématiques par le décodeur intégré, Prêt à jouer) avec barres et journal repliable ; import vérifié de bout en bout"
+        },
+        {
+          "name": "Onglet Avancement",
+          "state": "done"
+        },
+        {
+          "name": "Version et mises à jour",
+          "state": "done",
+          "note": "version 0.4.<build> (nombre de commits) affichée dans le lanceur et l'accueil ; chaque merge sur master publie une version avec son version.json (0.4.281 le 2 novembre, de bout en bout par les deux CI) ; recherche de la dernière version (au démarrage ou à la demande), installation sur PC (paquet déballé, redémarrage) et sur Android (APK et installateur du système) ; installation depuis le jeu à confirmer à la prochaine version"
+        },
+        {
+          "name": "Arrivée après l'import de la ROM",
+          "state": "done",
+          "note": "import réussi → l'accueil se présente : écran titre sorti du noir, logo dans un éclat avec la fanfare ME_008 (57), fenêtre du jeu « Importation réussie ! », puis le logo rejoint l'accueil ; environ 5 s, à passer au clavier, à la manette, à la souris ou au doigt ; seulement après un import réussi (--welcome pour la revoir) ; pas encore essayé sur un vrai import ni sur Android"
+        }
+      ]
+    }
+  ]
+}

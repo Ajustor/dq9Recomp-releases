@@ -1,0 +1,56 @@
+<script lang="ts">
+  import { effect } from '@ajustor/speedster'
+  import Footer from './components/Footer.spd'
+  import Header from './components/Header.spd'
+  import Sky from './components/Sky.spd'
+  import Download from './sections/home/Download.spd'
+  import Faq from './sections/home/Faq.spd'
+  import Hero from './sections/home/Hero.spd'
+  import Install from './sections/home/Install.spd'
+  import Progress from './sections/home/Progress.spd'
+  import { LATEST_RELEASE_API, detectPlatform } from './data.ts'
+  import type { Platform, Release } from './data.ts'
+
+  /** Le chemin de la racine du site depuis cette page : `./` en français, `../` sous `/en/`. */
+  export let root: string = './'
+
+  // Au rendu du build, rien de tout cela n'est connu : la page part avec les liens
+  // « dernière version », qui marchent sans JavaScript. Le navigateur complète.
+  let platform: Platform | null = null
+  let release: Release | null = null
+
+  effect(() => {
+    if (typeof window === 'undefined') return
+    platform = detectPlatform(navigator.userAgent)
+
+    const controller = new AbortController()
+    void fetch(LATEST_RELEASE_API, { signal: controller.signal, headers: { accept: 'application/vnd.github+json' } })
+      .then((response) => (response.ok ? response.json() : null))
+      .then((data: { tag_name: string; published_at: string; assets: { name: string; size: number }[] } | null) => {
+        if (data === null) return
+        const sizes: Record<string, number> = {}
+        for (const asset of data.assets) sizes[asset.name] = asset.size
+        release = { name: data.tag_name.replace(/^v/, ''), publishedAt: data.published_at, sizes }
+      })
+      // Hors ligne, ou limite de l'API atteinte : les liens directs suffisent.
+      .catch(() => {})
+    return () => controller.abort()
+  })
+</script>
+
+<Sky />
+<Header {root} />
+
+<main id="home">
+  <Hero {platform} {release} />
+  <Download {platform} {release} />
+  <Install />
+  <Progress />
+  <Faq />
+</main>
+
+<Footer />
+
+<style>
+  main { padding: 0 clamp(1rem, 4vw, 3rem) }
+</style>
