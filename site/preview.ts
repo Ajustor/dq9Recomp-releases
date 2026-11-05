@@ -2,8 +2,8 @@
 const server = Bun.serve({
   port: Number(process.env.PORT ?? 4173),
   async fetch(request) {
-    const chemin = new URL(request.url).pathname
-    const file = Bun.file(`dist${chemin.endsWith('/') ? `${chemin}index.html` : chemin}`)
+    const path = new URL(request.url).pathname
+    const file = Bun.file(`dist${path.endsWith('/') ? `${path}index.html` : path}`)
     if (!(await file.exists())) return new Response(null, { status: 404 })
     return new Response(file)
   },

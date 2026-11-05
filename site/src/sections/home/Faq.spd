@@ -1,0 +1,54 @@
+<script lang="ts">
+  import Section from '../../components/Section.spd'
+</script>
+
+<Section id="faq" title={t.faq.title}>
+  <div class="faq">
+    <details>
+      <summary class="menu-item">{t.faq.q1}</summary>
+      <p>{t.faq.a1}</p>
+    </details>
+    <details>
+      <summary class="menu-item">{t.faq.q2}</summary>
+      <p>{t.faq.a2}</p>
+    </details>
+    <details>
+      <summary class="menu-item">{t.faq.q3}</summary>
+      <p>{t.faq.a3}</p>
+    </details>
+    <details>
+      <summary class="menu-item">{t.faq.q4}</summary>
+      <p>{t.faq.a4}</p>
+    </details>
+  </div>
+</Section>
+
+<style>
+  .faq { display: grid; gap: 0.6rem; max-width: 52rem }
+
+  /* Chaque question est une petite fenêtre du jeu. */
+  details {
+    background: linear-gradient(180deg, var(--window-top), var(--window-bottom));
+    border: 2px solid var(--frame);
+    border-radius: 12px;
+    box-shadow: 0 0 0 2px var(--frame-shadow);
+  }
+
+  summary {
+    display: block;
+    padding: 0.85rem 1rem 0.85rem 2rem;
+    font-size: 1.05rem;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker { display: none }
+  summary::before { top: 0.9rem; left: 0.7rem }
+  details[open] summary::before { opacity: 1 }
+
+  details p {
+    margin: 0;
+    padding: 0 1.25rem 1.1rem 2rem;
+    line-height: 1.7;
+    color: var(--text-soft);
+  }
+</style>

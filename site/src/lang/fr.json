@@ -1,94 +1,94 @@
 {
   "meta": {
-    "titre": "DQ9Recomp — Dragon Quest IX sur PC et Android",
+    "title": "DQ9Recomp — Dragon Quest IX sur PC et Android",
     "description": "Portage natif non officiel de Dragon Quest IX pour Windows, Linux et Android. Téléchargez le lanceur, importez votre ROM, jouez.",
-    "partage": "Dragon Quest IX, réécrit en Rust pour Windows, Linux et Android."
+    "share": "Dragon Quest IX, réécrit en Rust pour Windows, Linux et Android."
   },
   "nav": {
     "sections": "Sections",
-    "langue": "Langue",
-    "telecharger": "Télécharger",
-    "installer": "Installer",
-    "avancement": "Avancement",
-    "questions": "Questions"
+    "language": "Langue",
+    "download": "Télécharger",
+    "install": "Installer",
+    "progress": "Avancement",
+    "faq": "Questions"
   },
-  "accueil": {
-    "surtitre": "Portage natif · Windows · Linux · Android",
-    "jeu": "Dragon Quest IX : Les Sentinelles du Firmament",
-    "accroche": ", réécrit en Rust pour tourner nativement sur PC et sur téléphone. Grand écran, manette, clavier ou tactile — et vos journaux qui vous suivent.",
-    "telecharger": "Télécharger",
-    "telechargerPour": "Télécharger pour {systeme}",
-    "toutes": "Toutes les versions",
+  "home": {
+    "kicker": "Portage natif · Windows · Linux · Android",
+    "game": "Dragon Quest IX : Les Sentinelles du Firmament",
+    "tagline": ", réécrit en Rust pour tourner nativement sur PC et sur téléphone. Grand écran, manette, clavier ou tactile — et vos journaux qui vous suivent.",
+    "download": "Télécharger",
+    "downloadFor": "Télécharger pour {platform}",
+    "allReleases": "Toutes les versions",
     "version": "Version",
-    "publiee": "· publiée le {date, date, long}",
-    "derniere": "Dernière version publiée sur GitHub"
+    "released": "· publiée le {date, date, long}",
+    "latest": "Dernière version publiée sur GitHub"
   },
   "dialogue": {
-    "l1": "Bienvenue, Sentinelle !",
-    "l2": "Ce portage ne contient aucune donnée du jeu.",
-    "l3": "Apportez la ROM de votre cartouche : le lanceur s’occupe du reste."
+    "line1": "Bienvenue, Sentinelle !",
+    "line2": "Ce portage ne contient aucune donnée du jeu.",
+    "line3": "Apportez la ROM de votre cartouche : le lanceur s’occupe du reste."
   },
-  "telecharger": {
-    "titre": "Télécharger",
-    "quel": "Quel système ?",
-    "votre": "Votre système",
-    "taille": "{n, number} Mio",
+  "download": {
+    "title": "Télécharger",
+    "which": "Quel système ?",
+    "yours": "Votre système",
+    "size": "{n, number} Mio",
     "windows": "Windows 10 et 11, 64 bits. Décompressez, puis lancez dq9-runtime.exe.",
     "linux": "x86-64. Décompressez, puis lancez ./dq9-runtime.",
     "android": "Téléphones 64 bits, Android 8 ou plus. Manette tactile intégrée.",
     "note": "Aucune donnée du jeu n’est incluse : chaque paquet ne contient que le moteur et son lanceur. Les versions précédentes et leurs notes sont sur",
-    "noteLien": "GitHub"
+    "noteLink": "GitHub"
   },
-  "installer": {
-    "titre": "Installer",
-    "e1Titre": "1 · Télécharger",
-    "e1": "Prenez le paquet de votre système ci-dessus. Sur PC, décompressez-le où vous voulez : tout reste dans ce dossier.",
-    "e2Titre": "2 · Importer la ROM",
-    "e2Avant": "Lancez",
-    "e2Apres": "(ou l’application DQ9Recomp) et choisissez la ROM européenne, copiée depuis votre propre cartouche.",
+  "install": {
+    "title": "Installer",
+    "step1Title": "1 · Télécharger",
+    "step1": "Prenez le paquet de votre système ci-dessus. Sur PC, décompressez-le où vous voulez : tout reste dans ce dossier.",
+    "step2Title": "2 · Importer la ROM",
+    "step2Before": "Lancez",
+    "step2After": "(ou l’application DQ9Recomp) et choisissez la ROM européenne, copiée depuis votre propre cartouche.",
     "version": "Version",
-    "versionValeur": "Europe (En, Fr, De, Es, It)",
+    "versionValue": "Europe (En, Fr, De, Es, It)",
     "code": "Code",
-    "fichier": "Fichier",
-    "fichierValeur": ".nds, environ 256 Mio",
-    "e3Titre": "3 · Jouer",
-    "e3": "Graphismes, textes, musiques et cinématiques sont extraits une fois pour toutes sur votre appareil. Ensuite, c’est l’écran titre.",
+    "file": "Fichier",
+    "fileValue": ".nds, environ 256 Mio",
+    "step3Title": "3 · Jouer",
+    "step3": "Graphismes, textes, musiques et cinématiques sont extraits une fois pour toutes sur votre appareil. Ensuite, c’est l’écran titre.",
     "android": "Android",
-    "androidTexte": "L’APK ne vient pas du Play Store : autorisez votre navigateur à installer des applications, puis ouvrez le fichier téléchargé. Play Protect peut demander une confirmation : l’APK est signé, toujours de la même clé.",
-    "majTitre": "Mises à jour",
-    "majAvant": "Le lanceur cherche les nouvelles versions au démarrage et les installe pour vous (",
-    "majChemin": "Réglages → Rechercher une mise à jour",
-    "majApres": "). Vos journaux sont conservés."
+    "androidText": "L’APK ne vient pas du Play Store : autorisez votre navigateur à installer des applications, puis ouvrez le fichier téléchargé. Play Protect peut demander une confirmation : l’APK est signé, toujours de la même clé.",
+    "updatesTitle": "Mises à jour",
+    "updatesBefore": "Le lanceur cherche les nouvelles versions au démarrage et les installe pour vous (",
+    "updatesPath": "Réglages → Rechercher une mise à jour",
+    "updatesAfter": "). Vos journaux sont conservés."
   },
-  "avancement": {
-    "titre": "Avancement",
-    "statut": "Statut",
-    "global": "Avancement global du portage : ce qui est réellement en place dans le moteur.",
-    "legende": "Un élément fait compte pour 1, partiel pour ½ ; ceux prévus pour la v2 (multijoueur) ne comptent pas. Mis à jour le {date, date, long}.",
-    "jauge": "{p} % du portage en place",
-    "pourcent": "{p} %",
-    "faits": "{fait} faits sur {total}",
+  "progress": {
+    "title": "Avancement",
+    "status": "Statut",
+    "overall": "Avancement global du portage : ce qui est réellement en place dans le moteur.",
+    "legend": "Un élément fait compte pour 1, partiel pour ½ ; ceux prévus pour la v2 (multijoueur) ne comptent pas. Mis à jour le {date, date, long}.",
+    "gauge": "{percent} % du portage en place",
+    "percent": "{percent} %",
+    "counts": "{done} faits sur {total}",
     "done": "fait",
     "partial": "partiel",
     "missing": "manquant",
     "later": "v2",
     "note": "Choisissez un domaine pour voir le détail, comme dans l’onglet Avancement du lanceur.",
-    "langueDuDetail": ""
+    "detailLanguage": ""
   },
   "faq": {
-    "titre": "Questions",
+    "title": "Questions",
     "q1": "Est-ce un émulateur ?",
-    "r1": "Non. C’est un moteur natif, écrit en Rust d’après la lecture du code ARM du jeu : ni émulation, ni recompilation statique. D’où la haute résolution et la fluidité.",
+    "a1": "Non. C’est un moteur natif, écrit en Rust d’après la lecture du code ARM du jeu : ni émulation, ni recompilation statique. D’où la haute résolution et la fluidité.",
     "q2": "Pourquoi faut-il ma propre ROM ?",
-    "r2": "Le projet ne distribue aucune donnée du jeu. Le lanceur vérifie la ROM (code YDQP), puis en extrait les ressources localement. Une autre version est refusée avec une explication.",
+    "a2": "Le projet ne distribue aucune donnée du jeu. Le lanceur vérifie la ROM (code YDQP), puis en extrait les ressources localement. Une autre version est refusée avec une explication.",
     "q3": "Puis-je reprendre ma sauvegarde DS ?",
-    "r3": "Oui : dans la page Journaux du lanceur, « Importer une sauvegarde DS » accepte les fichiers .sav et .dsv.",
+    "a3": "Oui : dans la page Journaux du lanceur, « Importer une sauvegarde DS » accepte les fichiers .sav et .dsv.",
     "q4": "Avec quoi joue-t-on ?",
-    "r4": "Clavier, manette, souris ou doigt. Les touches se reconfigurent dans le lanceur ; sur Android, une manette tactile s’affiche en jeu."
+    "a4": "Clavier, manette, souris ou doigt. Les touches se reconfigurent dans le lanceur ; sur Android, une manette tactile s’affiche en jeu."
   },
-  "pied": {
-    "avant": "Projet de fans non officiel, sans lien avec Square Enix, Level-5 ou Nintendo.",
-    "marque": "Dragon Quest",
-    "apres": "est une marque de Square Enix. Aucune donnée du jeu n’est distribuée."
+  "footer": {
+    "before": "Projet de fans non officiel, sans lien avec Square Enix, Level-5 ou Nintendo.",
+    "brand": "Dragon Quest",
+    "after": "est une marque de Square Enix. Aucune donnée du jeu n’est distribuée."
   }
 }

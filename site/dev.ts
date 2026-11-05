@@ -4,27 +4,29 @@ import { watch } from 'node:fs'
 import type { ServerWebSocket } from 'bun'
 
 const clients = new Set<ServerWebSocket<unknown>>()
-const RECHARGEMENT = `<script>new WebSocket('ws://' + location.host + '/__rechargement').onmessage = () => location.reload()</script>`
+const RELOAD_SCRIPT = `<script>new WebSocket('ws://' + location.host + '/__reload').onmessage = () => location.reload()</script>`
 
-async function construire(): Promise<void> {
-  const resultat = Bun.spawnSync(['bun', 'run', 'build.ts'], { stdout: 'inherit', stderr: 'inherit' })
-  if (resultat.exitCode === 0) for (const client of clients) client.send('recharger')
+async function rebuild(): Promise<void> {
+  const result = Bun.spawnSync(['bun', 'run', 'build.ts'], { stdout: 'inherit', stderr: 'inherit' })
+  if (result.exitCode === 0) for (const client of clients) client.send('reload')
 }
 
-await construire()
+await rebuild()
 
 const server = Bun.serve({
   port: 3000,
   async fetch(request, server) {
-    const chemin = new URL(request.url).pathname
-    if (chemin === '/__rechargement') {
+    const path = new URL(request.url).pathname
+    if (path === '/__reload') {
       return server.upgrade(request) ? undefined : new Response(null, { status: 400 })
     }
-    const file = Bun.file(`dist${chemin === '/' ? '/index.html' : chemin}`)
+    // Une page par langue : `/` et `/en/` sont chacune un `index.html`.
+    const isPage = path.endsWith('/')
+    const file = Bun.file(`dist${isPage ? `${path}index.html` : path}`)
     if (!(await file.exists())) return new Response(null, { status: 404 })
-    if (chemin === '/') {
+    if (isPage) {
       const page = await file.text()
-      return new Response(page.replace('</body>', `${RECHARGEMENT}</body>`), {
+      return new Response(page.replace('</body>', `${RELOAD_SCRIPT}</body>`), {
         headers: { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'no-store' },
       })
     }
@@ -37,18 +39,18 @@ const server = Bun.serve({
   },
 })
 
-let attente: ReturnType<typeof setTimeout> | undefined
-const planifier = () => {
-  clearTimeout(attente)
-  attente = setTimeout(() => void construire(), 80)
+let pending: ReturnType<typeof setTimeout> | undefined
+const schedule = () => {
+  clearTimeout(pending)
+  pending = setTimeout(() => void rebuild(), 80)
 }
-watch('src', { recursive: true }, (_evenement, nom) => {
+watch('src', { recursive: true }, (_event, name) => {
   // Le catalogue compilé est écrit par le build lui-même : le surveiller bouclerait.
-  const fichier = String(nom ?? '').replaceAll('\\', '/')
-  if (fichier.startsWith('lang/') && fichier.endsWith('.ts')) return
-  planifier()
+  const file = String(name ?? '').replaceAll('\\', '/')
+  if (file.startsWith('lang/') && file.endsWith('.ts')) return
+  schedule()
 })
-watch('public', { recursive: true }, planifier)
-watch('index.html', planifier)
+watch('public', { recursive: true }, schedule)
+watch('index.html', schedule)
 
 console.log(`http://localhost:${server.port}`)

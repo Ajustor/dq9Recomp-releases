@@ -106,8 +106,13 @@ recopier `config/progress.json` du dépôt privé dans `site/src/progress.json`.
 Le site est en français (`/`) et en anglais (`/en/`) : une page rendue au build par langue, avec
 ses liens `hreflang`. Les textes sont dans `site/src/lang/fr.json` (la référence) et `en.json` ;
 une clé absente d'une langue arrête le build. Ajouter une langue : un `<code>.json` de plus et une
-entrée dans `LANGUES` (`site/src/donnees.ts`). Le détail de l'avancement reste en français, comme
+entrée dans `LOCALES` (`site/src/data.ts`). Le détail de l'avancement reste en français, comme
 dans le lanceur.
+
+Organisation de `site/src/` : `App.spd` assemble la page ; `sections/home/` contient ses sections
+(Hero, Download, Install, Progress, Faq), chacune avec son style ; `components/` contient ce qui
+est partagé (Window, Section) et le cadre de page (Header, Footer, Sky). Le curseur ▶ des menus
+(`.menu-item`), les notes et les couleurs du thème sont dans `site/public/styles.css`.
 
 ```sh
 cd site && bun install

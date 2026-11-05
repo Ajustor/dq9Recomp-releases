@@ -1,0 +1,111 @@
+<script lang="ts">
+  import { locale } from '$messages'
+  import { LOCALES } from '../data.ts'
+
+  /** Le chemin de la racine du site depuis cette page : `./` en français, `../` sous `/en/`. */
+  export let root: string
+</script>
+
+<header class="header">
+  <a class="brand" href="#home">DQ9<span>Recomp</span></a>
+  <nav class="navigation" aria-label={t.nav.sections}>
+    <ul class="menu">
+      <li><a class="menu-item" href="#download">{t.nav.download}</a></li>
+      <li><a class="menu-item" href="#install">{t.nav.install}</a></li>
+      <li><a class="menu-item" href="#progress">{t.nav.progress}</a></li>
+      <li><a class="menu-item" href="#faq">{t.nav.faq}</a></li>
+    </ul>
+    <ul class="locales" aria-label={t.nav.language}>
+      {#each LOCALES as entry (entry.code)}
+        <li>
+          <a
+            class="locale"
+            class:current={locale.code() === entry.code}
+            href="{root}{entry.folder}"
+            hreflang={entry.code}
+            lang={entry.code}
+            aria-label={entry.name}
+            aria-current={locale.code() === entry.code ? 'page' : false}
+          >{entry.code.toUpperCase()}</a>
+        </li>
+      {/each}
+    </ul>
+  </nav>
+</header>
+
+<style>
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 1.5rem;
+    padding: 0.7rem clamp(1rem, 4vw, 3rem);
+    background: rgba(8, 11, 22, 0.82);
+    border-bottom: 1px solid var(--border);
+    backdrop-filter: blur(8px);
+  }
+
+  .brand {
+    font-family: var(--font-title);
+    font-weight: 700;
+    font-size: 1.35rem;
+    color: var(--text);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+  }
+
+  .brand span { color: var(--gold) }
+
+  .navigation {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.25rem 1.25rem;
+  }
+
+  .menu {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.25rem 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  /* --- Le choix de la langue : une pastille, la langue courante en or ---- */
+
+  .locales {
+    display: flex;
+    gap: 0.15rem;
+    margin: 0;
+    padding: 0.15rem;
+    list-style: none;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+  }
+
+  .locale {
+    display: inline-block;
+    min-width: 2.4rem;
+    padding: 0.3rem 0.55rem;
+    font-family: var(--font-menu);
+    font-size: 0.85rem;
+    text-align: center;
+    color: var(--weak);
+    text-decoration: none;
+    border-radius: 999px;
+  }
+
+  .locale:hover, .locale:focus-visible { color: #fff; background: var(--raised) }
+  .locale:focus-visible { outline: 2px solid var(--gold-light); outline-offset: 1px }
+  .current { color: #1e1606; background: var(--gold) }
+  .current:hover { color: #1e1606; background: var(--gold-light) }
+
+  @media (max-width: 40rem) {
+    .menu .menu-item { padding-right: 0.4rem; font-size: 0.92rem }
+  }
+</style>

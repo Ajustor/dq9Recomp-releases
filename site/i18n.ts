@@ -5,7 +5,7 @@ import { i18n } from '@ajustor/speedster/build'
  * Le français est la langue de référence : une clé qui manque dans une autre langue
  * arrête le build.
  */
-export async function compilerLangues(): Promise<boolean> {
+export async function compileLocales(): Promise<boolean> {
   const messages = await i18n.compileProject({
     source: 'src/lang',
     out: 'src/lang',
@@ -13,11 +13,11 @@ export async function compilerLangues(): Promise<boolean> {
     runtimeModule: '@ajustor/speedster',
   })
 
-  for (const probleme of messages.diagnostics) {
-    console.error(`  ${probleme.severity} ${probleme.locale} ${probleme.key} — ${probleme.message}`)
+  for (const problem of messages.diagnostics) {
+    console.error(`  ${problem.severity} ${problem.locale} ${problem.key} — ${problem.message}`)
   }
   return !messages.hasErrors
 }
 
 // Utilisable seul : `bun run i18n`.
-if (import.meta.main) process.exit((await compilerLangues()) ? 0 : 1)
+if (import.meta.main) process.exit((await compileLocales()) ? 0 : 1)

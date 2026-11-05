@@ -1,0 +1,17 @@
+<footer class="footer">
+  <p>{t.footer.before} <em>{t.footer.brand}</em> {t.footer.after}</p>
+  <p><a href="https://github.com/Ajustor/dq9Recomp-releases">Ajustor/dq9Recomp-releases</a></p>
+</footer>
+
+<style>
+  .footer {
+    margin-top: 3rem;
+    padding: 2rem clamp(1rem, 4vw, 3rem) 3rem;
+    font-size: 0.88rem;
+    color: var(--weak);
+    text-align: center;
+    border-top: 1px solid var(--border);
+  }
+
+  .footer p { margin: 0.35rem auto; max-width: 46rem; line-height: 1.6 }
+</style>
