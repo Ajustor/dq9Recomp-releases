@@ -1,0 +1,49 @@
+{
+  "lockfileVersion": 1,
+  "configVersion": 1,
+  "workspaces": {
+    "": {
+      "name": "dq9recomp-site",
+      "dependencies": {
+        "@ajustor/speedster": "0.0.9",
+      },
+      "devDependencies": {
+        "@types/bun": "^1.4.4",
+        "typescript": "^5.7.2",
+      },
+    },
+  },
+  "packages": {
+    "@ajustor/speedster": ["@ajustor/speedster@0.0.9", "", { "dependencies": { "@ajustor/speedster-check": "0.0.9", "@ajustor/speedster-cli": "0.0.9", "@ajustor/speedster-compiler": "0.0.9", "@ajustor/speedster-i18n": "0.0.9", "@ajustor/speedster-language-service": "0.0.9", "@ajustor/speedster-plugin": "0.0.9", "@ajustor/speedster-report": "0.0.9", "@ajustor/speedster-router": "0.0.9", "@ajustor/speedster-runtime": "0.0.9" }, "peerDependencies": { "typescript": "^5.7.0" } }, "sha512-b1WoYfnUvVizx3XR6Xm09bN3f2BjKt+Zmq09yrsaqWHeUyZip7dqghCww8rG6O68hmVZwKqPeeel5tvO+oX2gQ=="],
+
+    "@ajustor/speedster-check": ["@ajustor/speedster-check@0.0.9", "", { "dependencies": { "@ajustor/speedster-compiler": "0.0.9" }, "peerDependencies": { "typescript": "^5.7.0" }, "bin": { "speedster-check": "src/cli.ts" } }, "sha512-5ZrYwYfdLvP/KODHKWjF/ArNmnrCgoys9OtEt2/zh6peBsw5NVL2G1NU2N7qP+PlkEp3YnxjrCQpGpln5GizJA=="],
+
+    "@ajustor/speedster-cli": ["@ajustor/speedster-cli@0.0.9", "", { "dependencies": { "@ajustor/speedster-check": "0.0.9", "@ajustor/speedster-i18n": "0.0.9", "@ajustor/speedster-report": "0.0.9", "@ajustor/speedster-router": "0.0.9" }, "bin": { "speedster": "src/cli.ts" } }, "sha512-SjSMjzdRL/3iOAjOoMIZwYSdypo6+PCIvrF0t3+LYbQzK/4pOz4P7sATRkhBJNzItr+QBUW6tUbHkWf0NRmo6g=="],
+
+    "@ajustor/speedster-compiler": ["@ajustor/speedster-compiler@0.0.9", "", { "peerDependencies": { "typescript": "^5.7.0" } }, "sha512-QrAG2I827fAbaKeBVmRam5vz7pcj7HYxkN9xTBOrVfnmxSfpl8CfKLXflr6kYLVO5N5WeONCKTspsqxcxkI4iA=="],
+
+    "@ajustor/speedster-i18n": ["@ajustor/speedster-i18n@0.0.9", "", { "peerDependencies": { "@ajustor/speedster-runtime": "0.0.9" }, "bin": { "speedster-i18n": "src/cli.ts" } }, "sha512-GzGYKM2ANdm4yKuVAVyE34aBwIlpv2wJsG8yChhDRnqRIWmlVhY05RH8pq12pwmQ6PYMJoctVABNjznzNh1U6g=="],
+
+    "@ajustor/speedster-language-service": ["@ajustor/speedster-language-service@0.0.9", "", { "dependencies": { "@ajustor/speedster-compiler": "0.0.9" }, "peerDependencies": { "typescript": "^5.7.0" } }, "sha512-GLvNEG2YtQGTEcZEkfHA3473lNmm0EoIWutHJJqRDjtC5UZER0zK3GzT+C/6AcrJmoZ2aHXazsw3Q+SWhVz7zw=="],
+
+    "@ajustor/speedster-plugin": ["@ajustor/speedster-plugin@0.0.9", "", { "dependencies": { "@ajustor/speedster-compiler": "0.0.9" }, "peerDependencies": { "@ajustor/speedster-runtime": "0.0.9" } }, "sha512-9RRMxWakiWNw7wG6RQng2XpJd+c8SOdBrS0vUkId3Wq57OU62AAicq7/GbBH1G/XxT/aOJTaoceIGb2QADuwyA=="],
+
+    "@ajustor/speedster-report": ["@ajustor/speedster-report@0.0.9", "", { "dependencies": { "@ajustor/speedster-compiler": "0.0.9" } }, "sha512-Vpc1TLdSQSt88qqFXOx1/yzjO1CH566+bPnr0gO4TQ0Ovi5YST9YHI/c50R2dRWFXxJ8hFtmwI6IkzyxxFljKA=="],
+
+    "@ajustor/speedster-router": ["@ajustor/speedster-router@0.0.9", "", { "peerDependencies": { "@ajustor/speedster-runtime": "0.0.9" } }, "sha512-syVgJOLPeENqWRgQmIJprBjqBi+pQjH2kpgomQSi9VMQCf2W4fawVMhWJTJpLdwYgOYTghSYF0BJdFLLsz5/sA=="],
+
+    "@ajustor/speedster-runtime": ["@ajustor/speedster-runtime@0.0.9", "", {}, "sha512-4xMokSoCZRowN57odCEUy3G1FG775EyValzcUe4WWcU2JBW7j+NhUI7/XwXeXHeuK+I7kmAvvQAb812Qv5trzg=="],
+
+    "@types/bun": ["@types/bun@1.4.4", "", { "dependencies": { "bun-types": "1.4.4" } }, "sha512-9wkRDXUXK124pEnAutE6n/l18j+i9GC5IAHK8TmX/2nlySETmky0OU6yL5U8pW1AoKh++AN9auDCr647BfurjQ=="],
+
+    "@types/node": ["@types/node@26.6.6", "", { "dependencies": { "undici-types": "~8.9.0" } }, "sha512-MzQj+8Kx3XI40OmUAE6Qoh58ZMNstNNMwn2nfd3qWsfe7nDNSqJNzes4njhz6AHwrSHOffSLwXU6yb474Q4aog=="],
+
+    "bun-types": ["bun-types@1.4.4", "", { "dependencies": { "@types/node": "*", "undici-types": "*" } }, "sha512-yjrJh5oGX7mMPKGd19YXyIjmEuj4G4zNC30bs7PM9Az7NQ3ndF3j6hbeRdvJTRQEhJ/FYQwW0a2moweEi2hMxQ=="],
+
+    "typescript": ["typescript@5.9.3", "", { "bin": { "tsc": "bin/tsc", "tsserver": "bin/tsserver" } }, "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw=="],
+
+    "undici-types": ["undici-types@8.12.4", "", {}, "sha512-GNCQH3MbVGB8OAVAoTiLH8pu4wx5Ni3DWKpnBzGj3WDsi8EwmK0aOVBooNEt+g5YL1eHPxcS9XUTouwFU6j1kQ=="],
+
+    "@types/node/undici-types": ["undici-types@8.9.0", "", {}, "sha512-KTDyRTYX8sWmKXAikPHHSyc63CRPETMctyjKFupcC6OBLXT3xsN0e9aF7m+mIXutFWpUXuedtowG7iLOzp0kQg=="],
+  }
+}

@@ -1,0 +1,50 @@
+<script lang="ts">
+  import type { Snippet } from '@ajustor/speedster'
+
+  /** L'onglet posé sur le cadre, comme le nom d'un menu du jeu. Vide : pas d'onglet. */
+  export let titre: string = ''
+  export let children: Snippet
+</script>
+
+<div class="fenetre" class:avec-onglet={titre !== ''}>
+  {#if titre !== ''}<span class="onglet">{titre}</span>{/if}
+  {@render children()}
+</div>
+
+<style>
+  /* La fenêtre des menus : bleu nuit translucide, double cadre blanc arrondi. */
+  .fenetre {
+    position: relative;
+    padding: 1.25rem 1.4rem;
+    color: var(--texte);
+    background: linear-gradient(180deg, var(--fenetre-haut), var(--fenetre-bas));
+    border: 3px solid var(--cadre);
+    border-radius: 14px;
+    box-shadow:
+      0 0 0 3px var(--cadre-ombre),
+      inset 0 0 0 2px var(--cadre-ombre),
+      inset 0 1px 0 4px rgba(255, 255, 255, 0.04),
+      0 18px 40px -12px rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(2px);
+  }
+
+  .avec-onglet {
+    margin-top: 1.1rem;
+    padding-top: 1.75rem;
+  }
+
+  .onglet {
+    position: absolute;
+    top: -1.05rem;
+    left: 1.1rem;
+    padding: 0.2rem 0.9rem;
+    font-family: var(--police-menu);
+    font-size: 0.95rem;
+    letter-spacing: 0.04em;
+    color: var(--or-clair);
+    background: var(--fenetre-haut);
+    border: 3px solid var(--cadre);
+    border-radius: 10px;
+    box-shadow: 0 0 0 3px var(--cadre-ombre);
+  }
+</style>

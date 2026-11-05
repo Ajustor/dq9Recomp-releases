@@ -1,0 +1,53 @@
+/* Le thème du lanceur (crates/dq9-launcher/src/theme.rs) : nuit bleu profond,
+   accents dorés ; et les fenêtres des menus du jeu, bleu nuit à cadre blanc. */
+:root {
+  color-scheme: dark;
+
+  --nuit: #0c1120;
+  --panneau: #141c32;
+  --releve: #1e2844;
+  --survol: #2a375c;
+  --bord: #303e64;
+  --or: #e8b64c;
+  --or-clair: #f8d078;
+  --texte: #e7ecf7;
+  --texte-doux: #c3cbe0;
+  --faible: #96a2c2;
+  --ciel: #5fa8e8;
+  --ok: #6ccb8b;
+  --avert: #e8a33d;
+  --erreur: #e46a6a;
+  --ciel-clair: #8cc3f2;
+
+  --fenetre-haut: rgba(30, 44, 98, 0.94);
+  --fenetre-bas: rgba(13, 20, 52, 0.94);
+  --cadre: #f2f4fa;
+  --cadre-ombre: #080c1a;
+
+  --police-titre: 'Cinzel', 'Trajan Pro', Georgia, serif;
+  --police-menu: 'DotGothic16', ui-monospace, monospace;
+  --police-texte: 'Nunito Sans', system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box }
+
+html { scroll-behavior: smooth; background: #070a14 }
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--police-texte);
+  font-size: 1.02rem;
+  color: var(--texte);
+  background:
+    radial-gradient(ellipse 80% 50% at 75% -10%, rgba(95, 168, 232, 0.22), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 10% 0%, rgba(232, 182, 76, 0.12), transparent 60%),
+    linear-gradient(180deg, #0f1730 0%, var(--nuit) 45%, #070a14 100%);
+  background-attachment: fixed;
+}
+
+::selection { background: #785c1e; color: #fff }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto }
+}
