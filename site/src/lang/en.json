@@ -1,0 +1,94 @@
+{
+  "meta": {
+    "titre": "DQ9Recomp — Dragon Quest IX on PC and Android",
+    "description": "Unofficial native port of Dragon Quest IX for Windows, Linux and Android. Download the launcher, import your ROM, play.",
+    "partage": "Dragon Quest IX, rewritten in Rust for Windows, Linux and Android."
+  },
+  "nav": {
+    "sections": "Sections",
+    "langue": "Language",
+    "telecharger": "Download",
+    "installer": "Install",
+    "avancement": "Progress",
+    "questions": "FAQ"
+  },
+  "accueil": {
+    "surtitre": "Native port · Windows · Linux · Android",
+    "jeu": "Dragon Quest IX: Sentinels of the Starry Skies",
+    "accroche": ", rewritten in Rust to run natively on PC and phones. Big screen, gamepad, keyboard or touch — and your adventure logs come with you.",
+    "telecharger": "Download",
+    "telechargerPour": "Download for {systeme}",
+    "toutes": "All releases",
+    "version": "Version",
+    "publiee": "· released {date, date, long}",
+    "derniere": "Latest release on GitHub"
+  },
+  "dialogue": {
+    "l1": "Welcome, Celestrian!",
+    "l2": "This port contains no game data.",
+    "l3": "Bring the ROM from your own cartridge: the launcher takes care of the rest."
+  },
+  "telecharger": {
+    "titre": "Download",
+    "quel": "Which system?",
+    "votre": "Your system",
+    "taille": "{n, number} MiB",
+    "windows": "Windows 10 and 11, 64-bit. Unzip, then run dq9-runtime.exe.",
+    "linux": "x86-64. Extract, then run ./dq9-runtime.",
+    "android": "64-bit phones, Android 8 or later. Built-in touch controls.",
+    "note": "No game data is included: each package only holds the engine and its launcher. Previous releases and their notes are on",
+    "noteLien": "GitHub"
+  },
+  "installer": {
+    "titre": "Install",
+    "e1Titre": "1 · Download",
+    "e1": "Grab the package for your system above. On PC, extract it wherever you like: everything stays in that folder.",
+    "e2Titre": "2 · Import the ROM",
+    "e2Avant": "Run",
+    "e2Apres": "(or the DQ9Recomp app) and pick the European ROM, dumped from your own cartridge.",
+    "version": "Version",
+    "versionValeur": "Europe (En, Fr, De, Es, It)",
+    "code": "Code",
+    "fichier": "File",
+    "fichierValeur": ".nds, about 256 MiB",
+    "e3Titre": "3 · Play",
+    "e3": "Graphics, text, music and cutscenes are extracted once and for all on your device. Then it’s the title screen.",
+    "android": "Android",
+    "androidTexte": "The APK doesn’t come from the Play Store: allow your browser to install apps, then open the downloaded file. Play Protect may ask for confirmation: the APK is signed, always with the same key.",
+    "majTitre": "Updates",
+    "majAvant": "The launcher checks for new releases at startup and installs them for you (",
+    "majChemin": "Settings → Check for updates",
+    "majApres": "). Your adventure logs are kept."
+  },
+  "avancement": {
+    "titre": "Progress",
+    "statut": "Status",
+    "global": "Overall progress of the port: what is actually working in the engine.",
+    "legende": "A done item counts as 1, a partial one as ½; items planned for v2 (multiplayer) are not counted. Updated {date, date, long}.",
+    "jauge": "{p}% of the port in place",
+    "pourcent": "{p}%",
+    "faits": "{fait} done out of {total}",
+    "done": "done",
+    "partial": "partial",
+    "missing": "missing",
+    "later": "v2",
+    "note": "Pick an area to see the details, as in the launcher’s Progress tab.",
+    "langueDuDetail": "Area and item details are written in French, as in the launcher."
+  },
+  "faq": {
+    "titre": "FAQ",
+    "q1": "Is it an emulator?",
+    "r1": "No. It’s a native engine, written in Rust from a reading of the game’s ARM code: neither emulation nor static recompilation. Hence the high resolution and smoothness.",
+    "q2": "Why do I need my own ROM?",
+    "r2": "The project distributes no game data. The launcher checks the ROM (code YDQP), then extracts its assets locally. Any other version is refused with an explanation.",
+    "q3": "Can I keep my DS save?",
+    "r3": "Yes: on the launcher’s Adventure Logs page, “Import a DS save” accepts .sav and .dsv files.",
+    "q4": "What can I play with?",
+    "r4": "Keyboard, gamepad, mouse or touch. Controls can be remapped in the launcher; on Android, a touch gamepad appears in game."
+  },
+  "pied": {
+    "avant": "Unofficial fan project, not affiliated with Square Enix, Level-5 or Nintendo.",
+    "marque": "Dragon Quest",
+    "apres": "is a trademark of Square Enix. No game data is distributed."
+  }
+}

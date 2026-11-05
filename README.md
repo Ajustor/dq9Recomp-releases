@@ -103,6 +103,12 @@ complète le système détecté, le numéro de la dernière version et la taille
 GitHub). Une nouvelle version n'a donc pas besoin de republier le site ; seul l'avancement se met à jour à la main :
 recopier `config/progress.json` du dépôt privé dans `site/src/progress.json`.
 
+Le site est en français (`/`) et en anglais (`/en/`) : une page rendue au build par langue, avec
+ses liens `hreflang`. Les textes sont dans `site/src/lang/fr.json` (la référence) et `en.json` ;
+une clé absente d'une langue arrête le build. Ajouter une langue : un `<code>.json` de plus et une
+entrée dans `LANGUES` (`site/src/donnees.ts`). Le détail de l'avancement reste en français, comme
+dans le lanceur.
+
 ```sh
 cd site && bun install
 bun run dev       # http://localhost:3000, reconstruit et recharge à chaque sauvegarde

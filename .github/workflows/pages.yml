@@ -43,6 +43,10 @@ jobs:
       - name: Types et accessibilité
         run: bun run check
 
+      # Les scripts de build compris (build.ts importe le plugin).
+      - name: Types du projet
+        run: bun run typecheck
+
       - name: Construire
         run: bun run build
 

@@ -42,7 +42,12 @@ const planifier = () => {
   clearTimeout(attente)
   attente = setTimeout(() => void construire(), 80)
 }
-watch('src', { recursive: true }, planifier)
+watch('src', { recursive: true }, (_evenement, nom) => {
+  // Le catalogue compilé est écrit par le build lui-même : le surveiller bouclerait.
+  const fichier = String(nom ?? '').replaceAll('\\', '/')
+  if (fichier.startsWith('lang/') && fichier.endsWith('.ts')) return
+  planifier()
+})
 watch('public', { recursive: true }, planifier)
 watch('index.html', planifier)
 

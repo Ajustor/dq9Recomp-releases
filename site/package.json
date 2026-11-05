@@ -8,13 +8,14 @@
     "build": "bun run build.ts",
     "preview": "bun run preview.ts",
     "typecheck": "tsc --noEmit",
-    "check": "speedster check src"
+    "check": "bun run i18n.ts && speedster check src",
+    "i18n": "bun run i18n.ts"
   },
   "devDependencies": {
     "@types/bun": "^1.4.4",
     "typescript": "^5.7.2"
   },
   "dependencies": {
-    "@ajustor/speedster": "0.0.9"
+    "@ajustor/speedster": "0.0.10"
   }
 }

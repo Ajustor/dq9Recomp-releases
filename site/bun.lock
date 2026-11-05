@@ -5,7 +5,7 @@
     "": {
       "name": "dq9recomp-site",
       "dependencies": {
-        "@ajustor/speedster": "0.0.9",
+        "@ajustor/speedster": "0.0.10",
       },
       "devDependencies": {
         "@types/bun": "^1.4.4",
@@ -14,25 +14,25 @@
     },
   },
   "packages": {
-    "@ajustor/speedster": ["@ajustor/speedster@0.0.9", "", { "dependencies": { "@ajustor/speedster-check": "0.0.9", "@ajustor/speedster-cli": "0.0.9", "@ajustor/speedster-compiler": "0.0.9", "@ajustor/speedster-i18n": "0.0.9", "@ajustor/speedster-language-service": "0.0.9", "@ajustor/speedster-plugin": "0.0.9", "@ajustor/speedster-report": "0.0.9", "@ajustor/speedster-router": "0.0.9", "@ajustor/speedster-runtime": "0.0.9" }, "peerDependencies": { "typescript": "^5.7.0" } }, "sha512-b1WoYfnUvVizx3XR6Xm09bN3f2BjKt+Zmq09yrsaqWHeUyZip7dqghCww8rG6O68hmVZwKqPeeel5tvO+oX2gQ=="],
+    "@ajustor/speedster": ["@ajustor/speedster@0.0.10", "", { "dependencies": { "@ajustor/speedster-check": "0.0.10", "@ajustor/speedster-cli": "0.0.10", "@ajustor/speedster-compiler": "0.0.10", "@ajustor/speedster-i18n": "0.0.10", "@ajustor/speedster-language-service": "0.0.10", "@ajustor/speedster-plugin": "0.0.10", "@ajustor/speedster-report": "0.0.10", "@ajustor/speedster-router": "0.0.10", "@ajustor/speedster-runtime": "0.0.10" }, "peerDependencies": { "typescript": "^5.7.0" } }, "sha512-kDXT+8rRg4pXfpkHRYU3T62FzRMYKvBzEOmAh8H+NOhH4oJWrjISE2uMpFsEhl9DHgIPYib4L/2+d36jR7aY2Q=="],
 
-    "@ajustor/speedster-check": ["@ajustor/speedster-check@0.0.9", "", { "dependencies": { "@ajustor/speedster-compiler": "0.0.9" }, "peerDependencies": { "typescript": "^5.7.0" }, "bin": { "speedster-check": "src/cli.ts" } }, "sha512-5ZrYwYfdLvP/KODHKWjF/ArNmnrCgoys9OtEt2/zh6peBsw5NVL2G1NU2N7qP+PlkEp3YnxjrCQpGpln5GizJA=="],
+    "@ajustor/speedster-check": ["@ajustor/speedster-check@0.0.10", "", { "dependencies": { "@ajustor/speedster-compiler": "0.0.10" }, "peerDependencies": { "typescript": "^5.7.0" }, "bin": { "speedster-check": "src/cli.ts" } }, "sha512-7W9OLAVAd1jQ24QOa2JFOuRrHBOpJZK7kPMheeTVRH5pGiHWHV1V94Bnnlz8i/pftKITdax/tXZBi6jRCRjx8Q=="],
 
-    "@ajustor/speedster-cli": ["@ajustor/speedster-cli@0.0.9", "", { "dependencies": { "@ajustor/speedster-check": "0.0.9", "@ajustor/speedster-i18n": "0.0.9", "@ajustor/speedster-report": "0.0.9", "@ajustor/speedster-router": "0.0.9" }, "bin": { "speedster": "src/cli.ts" } }, "sha512-SjSMjzdRL/3iOAjOoMIZwYSdypo6+PCIvrF0t3+LYbQzK/4pOz4P7sATRkhBJNzItr+QBUW6tUbHkWf0NRmo6g=="],
+    "@ajustor/speedster-cli": ["@ajustor/speedster-cli@0.0.10", "", { "dependencies": { "@ajustor/speedster-check": "0.0.10", "@ajustor/speedster-i18n": "0.0.10", "@ajustor/speedster-report": "0.0.10", "@ajustor/speedster-router": "0.0.10" }, "bin": { "speedster": "src/cli.ts" } }, "sha512-kTchi7+w5BoQ9FAsUdEbfcytXgU+SiWDXqOKdj8zbZIrjVPPsE2QyMAJbP9RR2MNJ6uC4XsZ5Z2Skq5V5VAp+A=="],
 
-    "@ajustor/speedster-compiler": ["@ajustor/speedster-compiler@0.0.9", "", { "peerDependencies": { "typescript": "^5.7.0" } }, "sha512-QrAG2I827fAbaKeBVmRam5vz7pcj7HYxkN9xTBOrVfnmxSfpl8CfKLXflr6kYLVO5N5WeONCKTspsqxcxkI4iA=="],
+    "@ajustor/speedster-compiler": ["@ajustor/speedster-compiler@0.0.10", "", { "peerDependencies": { "typescript": "^5.7.0" } }, "sha512-VoGtnP8ALuD3c21ozzK2wzdoyjyOB0D2FFS20krXgma91rzYq0dYqdXzOf9yh+Udc85r21GAPXRJQmLlJAOQyA=="],
 
-    "@ajustor/speedster-i18n": ["@ajustor/speedster-i18n@0.0.9", "", { "peerDependencies": { "@ajustor/speedster-runtime": "0.0.9" }, "bin": { "speedster-i18n": "src/cli.ts" } }, "sha512-GzGYKM2ANdm4yKuVAVyE34aBwIlpv2wJsG8yChhDRnqRIWmlVhY05RH8pq12pwmQ6PYMJoctVABNjznzNh1U6g=="],
+    "@ajustor/speedster-i18n": ["@ajustor/speedster-i18n@0.0.10", "", { "peerDependencies": { "@ajustor/speedster-runtime": "0.0.10" }, "bin": { "speedster-i18n": "src/cli.ts" } }, "sha512-MSZjIDBOUURCZZeHQLD+vehCL+VeKtl/I1eVU7AWiW+X2FnJAwmJzNwSa3aRte2EOjLcYgSPmNN8StRzgZDlaw=="],
 
-    "@ajustor/speedster-language-service": ["@ajustor/speedster-language-service@0.0.9", "", { "dependencies": { "@ajustor/speedster-compiler": "0.0.9" }, "peerDependencies": { "typescript": "^5.7.0" } }, "sha512-GLvNEG2YtQGTEcZEkfHA3473lNmm0EoIWutHJJqRDjtC5UZER0zK3GzT+C/6AcrJmoZ2aHXazsw3Q+SWhVz7zw=="],
+    "@ajustor/speedster-language-service": ["@ajustor/speedster-language-service@0.0.10", "", { "dependencies": { "@ajustor/speedster-compiler": "0.0.10" }, "peerDependencies": { "typescript": "^5.7.0" } }, "sha512-GUdAQHHd/0mRVwpp7U71781UTjSlrlb8YtBjXKpVkDjZefpqx+nLFRtdJHd1nG+I/qjT+d6FVSGl3k1rDqkkqg=="],
 
-    "@ajustor/speedster-plugin": ["@ajustor/speedster-plugin@0.0.9", "", { "dependencies": { "@ajustor/speedster-compiler": "0.0.9" }, "peerDependencies": { "@ajustor/speedster-runtime": "0.0.9" } }, "sha512-9RRMxWakiWNw7wG6RQng2XpJd+c8SOdBrS0vUkId3Wq57OU62AAicq7/GbBH1G/XxT/aOJTaoceIGb2QADuwyA=="],
+    "@ajustor/speedster-plugin": ["@ajustor/speedster-plugin@0.0.10", "", { "dependencies": { "@ajustor/speedster-compiler": "0.0.10" }, "peerDependencies": { "@ajustor/speedster-runtime": "0.0.10" } }, "sha512-GLggqi3q5YATNUOyN1EK+9P8ib9Z1qgIIpDHi2jDz0UTrnoRfC7+B5nNWHwiLBrfBwdhytrdbTmc62V6RjB4Gg=="],
 
-    "@ajustor/speedster-report": ["@ajustor/speedster-report@0.0.9", "", { "dependencies": { "@ajustor/speedster-compiler": "0.0.9" } }, "sha512-Vpc1TLdSQSt88qqFXOx1/yzjO1CH566+bPnr0gO4TQ0Ovi5YST9YHI/c50R2dRWFXxJ8hFtmwI6IkzyxxFljKA=="],
+    "@ajustor/speedster-report": ["@ajustor/speedster-report@0.0.10", "", { "dependencies": { "@ajustor/speedster-compiler": "0.0.10" } }, "sha512-tIzKyiz49Ob9nLIpBNpkL0avVYU9UldJjhMwZbRbeeTOp7YEyELquekt0BniOo4wtdm8mznTlsbB6Yj/wWNVUw=="],
 
-    "@ajustor/speedster-router": ["@ajustor/speedster-router@0.0.9", "", { "peerDependencies": { "@ajustor/speedster-runtime": "0.0.9" } }, "sha512-syVgJOLPeENqWRgQmIJprBjqBi+pQjH2kpgomQSi9VMQCf2W4fawVMhWJTJpLdwYgOYTghSYF0BJdFLLsz5/sA=="],
+    "@ajustor/speedster-router": ["@ajustor/speedster-router@0.0.10", "", { "peerDependencies": { "@ajustor/speedster-runtime": "0.0.10" } }, "sha512-I/NxhKJwrAM20lWwkaXwKYDvvXcuBCLOormbLFfLrkxnn1S2qhrm/NXOw+DUWTxLoSP6TtfpqLTtuybfgH1mTw=="],
 
-    "@ajustor/speedster-runtime": ["@ajustor/speedster-runtime@0.0.9", "", {}, "sha512-4xMokSoCZRowN57odCEUy3G1FG775EyValzcUe4WWcU2JBW7j+NhUI7/XwXeXHeuK+I7kmAvvQAb812Qv5trzg=="],
+    "@ajustor/speedster-runtime": ["@ajustor/speedster-runtime@0.0.10", "", {}, "sha512-s6yfznSneJCsdK5MY+TPsNq05m6vsm6oFkkof3Qusfz1szp4zNfzNEcXa962qZRpOjbILve5FK1YRW4ZMKyTtA=="],
 
     "@types/bun": ["@types/bun@1.4.4", "", { "dependencies": { "bun-types": "1.4.4" } }, "sha512-9wkRDXUXK124pEnAutE6n/l18j+i9GC5IAHK8TmX/2nlySETmky0OU6yL5U8pW1AoKh++AN9auDCr647BfurjQ=="],
 

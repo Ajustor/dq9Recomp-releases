@@ -1,3 +1,5 @@
+import avancement from './progress.json'
+
 /**
  * Ce que le site affiche et qui ne vient pas de l'API de GitHub.
  *
@@ -12,11 +14,11 @@ export const API_DERNIERE = `https://api.github.com/repos/${DEPOT}/releases/late
 
 export type Systeme = 'windows' | 'linux' | 'android'
 
+/** Le détail de chaque paquet est un message : `t.telecharger[systeme]`. */
 export interface Paquet {
   systeme: Systeme
   nom: string
   fichier: string
-  detail: string
 }
 
 export const PAQUETS: readonly Paquet[] = [
@@ -24,19 +26,16 @@ export const PAQUETS: readonly Paquet[] = [
     systeme: 'windows',
     nom: 'Windows',
     fichier: 'dq9recomp-windows-x64.zip',
-    detail: 'Windows 10 et 11, 64 bits. Décompressez, puis lancez dq9-runtime.exe.',
   },
   {
     systeme: 'linux',
     nom: 'Linux',
     fichier: 'dq9recomp-linux-x64.tar.gz',
-    detail: 'x86-64. Décompressez, puis lancez ./dq9-runtime.',
   },
   {
     systeme: 'android',
     nom: 'Android',
     fichier: 'dq9recomp-android-arm64.apk',
-    detail: 'Téléphones 64 bits, Android 8 ou plus. Manette tactile intégrée.',
   },
 ]
 
@@ -50,8 +49,6 @@ export const lienDirect = (fichier: string): string =>
  * (`crates/dq9-launcher/src/progress.rs`) : fait compte 1, partiel ½, manquant 0,
  * et les éléments prévus pour la v2 ne comptent pas.
  */
-import avancement from './progress.json'
-
 export type Etat = 'done' | 'partial' | 'missing' | 'later'
 
 export interface Element {
@@ -80,8 +77,6 @@ export const tousLesElements = (): Element[] => AVANCEMENT.domains.flatMap((doma
 
 export const pourcent = (valeur: number): string => `${Math.round(valeur * 100)}`
 
-/** Le mot de l'état, comme dans le lanceur. */
-export const MOT: Record<Etat, string> = { done: 'fait', partial: 'partiel', missing: 'manquant', later: 'v2' }
 
 /** Le système du visiteur, d'après son navigateur. `null` si on ne sait pas. */
 export function detecterSysteme(agent: string): Systeme | null {
@@ -91,11 +86,23 @@ export function detecterSysteme(agent: string): Systeme | null {
   return null
 }
 
-export function taille(octets: number): string {
-  const mio = octets / (1024 * 1024)
-  return `${mio.toLocaleString('fr-FR', { maximumFractionDigits: mio < 10 ? 1 : 0 })} Mio`
+/** Une taille en Mio, arrondie comme on la lit : 8,3 mais 12. */
+export function mio(octets: number): number {
+  const valeur = octets / (1024 * 1024)
+  return valeur < 10 ? Math.round(valeur * 10) / 10 : Math.round(valeur)
 }
 
-export function date(iso: string): string {
-  return new Date(iso).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })
-}
+/**
+ * Les langues du site. La première est à la racine, les autres dans leur dossier
+ * (`/en/`) : une page par langue, rendue au build, que les moteurs de recherche
+ * indexent et que l'on peut partager.
+ */
+export const LANGUES = [
+  { code: 'fr', nom: 'Français', dossier: '' },
+  { code: 'en', nom: 'English', dossier: 'en/' },
+] as const
+
+export type CodeLangue = (typeof LANGUES)[number]['code']
+
+/** L'adresse publique du site, pour les liens `hreflang` et canoniques. */
+export const ADRESSE = 'https://ajustor.github.io/dq9Recomp-releases/'
