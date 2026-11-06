@@ -365,8 +365,8 @@
         },
         {
           "name": "Connexion Wi-Fi (DLC, quêtes et objets téléchargeables)",
-          "state": "partial",
-          "note": "hors ligne : VPC DQ de Vanda (stock du jour d'après la date du système, catalogue historique des 52 semaines européennes, achat, équipement ; prix et quantités supposés), première visite qui livre les 64 quêtes téléchargées et les héros légendaires (conditions 502, 506) ; reste : transmission du journal, enchères japonaises (sans objet en Europe)"
+          "state": "done",
+          "note": "hors ligne : VPC DQ de Vanda (stock du jour d'après la date du système, catalogue historique des 52 semaines européennes, achat, équipement ; prix et quantités supposés ; stock repris d'une sauvegarde DS importée), première visite qui livre les 64 quêtes téléchargées et les héros légendaires (conditions 502, 506) ; non repris : la transmission du journal à Square Enix et les enchères japonaises (sans serveur, sans objet)"
         },
         {
           "name": "Mini-médailles, bestiaire, accolades",
