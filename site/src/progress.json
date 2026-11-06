@@ -1,5 +1,5 @@
 {
-  "updated": "2026-11-05",
+  "updated": "2026-11-06",
   "domains": [
     {
       "name": "Extraction et formats",
@@ -355,13 +355,13 @@
         },
         {
           "name": "Jeu à plusieurs (Wi-Fi local)",
-          "state": "later",
-          "note": "v2 : multijoueur, après la version solo"
+          "state": "done",
+          "note": "réseau local (net.rs, field/online.rs) : salons ouverts et rejoints auprès de Paona, les joueurs d'une carte se voient (présence, apparence et équipement, attitudes, téléportation) ; l'invité visite le monde de l'hôte et retrouve le sien au retour ; monde commun pendant la visite (drapeaux, coffres, portes, interrupteurs, heure de l'hôte, récolte arbitrée) ; monstres errants tenus par un seul joueur de la carte ; compagnons mis de côté, seuls les héros vont ; combat commun au pas (field/fight.rs : on rejoint en touchant le monstre figé, commandes par joueur, empreinte de l'état et remise au pas, changement d'arme, départs et nouveau maître, gains par joueur), vu à deux instances ; le « oui » à Célestelle emmène les joueurs au royaume du Puissant (58) ; à voir : la question de Célestelle jouée à deux depuis une vraie partie d'après la fin"
         },
         {
           "name": "Mode Tag et invités",
-          "state": "partial",
-          "note": "en différé (rencontre.rs, erinn.rs, field/canvass.rs) : carte de visite et paquet du jeu, fichiers d'échange (rencontre/envoi, rencontre/recus), séance chez Bérangère (3 cartes, refus du jeu, sauvegarde), registre des 30 invités, rang et hall du Quester's Rest, invités dans les salles (modèle par vocation et sexe), leur réplique profsen et leur carte au trésor, registre (suites royales, départ), record et titres « clients démarchés » ; paramètres de profil (lieu, anniversaire, style, âge caché), auberge de Bérangère, carte au trésor emportée, registre et carte lus dans une sauvegarde DS ; message de présentation (clavier du jeu, de l'appareil, saisie Android) ; reste : service d'échange"
+          "state": "done",
+          "note": "en différé (rencontre.rs, erinn.rs, field/canvass.rs) : carte de visite et paquet du jeu, fichiers d'échange (rencontre/envoi, rencontre/recus), séance chez Bérangère (3 cartes, refus du jeu, sauvegarde), registre des 30 invités, rang et hall du Quester's Rest, invités dans les salles (modèle par vocation et sexe), leur réplique profsen et leur carte au trésor, registre (suites royales, départ), record et titres « clients démarchés » ; paramètres de profil (lieu, anniversaire, style, âge caché), auberge de Bérangère, carte au trésor emportée, registre et carte lus dans une sauvegarde DS ; message de présentation (clavier du jeu, de l'appareil, saisie Android) ; service d'échange en réseau local, comme le mode Tag (net/tag.rs : la carte diffusée en démarchant, chaque jeu ouvert répond par la sienne et garde celle du démarcheur) ; démarchage refusé en partie à plusieurs"
         },
         {
           "name": "Connexion Wi-Fi (DLC, quêtes et objets téléchargeables)",
